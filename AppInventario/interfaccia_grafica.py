@@ -25,11 +25,14 @@ class App(tk.Tk):
     ''' App e' un'interfaccia grafica per un'applicazione di gestione inventari.
 
     Attributi:
-        ArticlesCommandPanel
-        FilesCommand
+        articles_command_panel (ArticlesCommandPanel): frame che contiene quattro pulsanti e quattro label
+        files_command_panel (FilesCommandPanel): frame che contiene una Combobox, tre pulsanti e quattro label
+        save_panel (SavePanel): frame che contiene una label e un pulsante
     '''
 
     def __init__(self):
+        '''Inizializza App'''
+
         tk.Tk.__init__(self) 
         
         self.files_manager=FilesManager()
