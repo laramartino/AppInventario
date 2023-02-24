@@ -145,24 +145,6 @@ class FilesManager:
         return list(self.files.keys())
 
 
-if __name__=='__main__':
-    obj=FilesManager()
-    obj.inser_file('inventario1')
-    obj.inser_file('inventario2')
-    obj.inser_file('inventario4')
-
-    obj.rimoz_file('inventario1')
-    obj.rimoz_file('inventario3')
-
-    obj.files['inventario2'].insert_list_val([('12567345','500'), ('67241568', '1000')])
-    ret= obj.export_file('inventario2')
-    ret= obj.export_file('inventario4')
-
-    obj.modifica_file_name('inventario2', 'inventario5')
-    obj.modifica_file_name('inventario5', 'inventario4')
-    obj.modifica_file_name('inventario7', 'inventario8')
-
-
 
 
 

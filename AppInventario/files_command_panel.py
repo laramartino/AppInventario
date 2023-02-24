@@ -12,6 +12,7 @@ Esempio:
     obj.pack() 
     app.mainloop() 
 """
+
 import tkinter as tk 
 from tkinter import ttk
 from tkinter import messagebox
@@ -60,7 +61,7 @@ class FilesCommandPanel (tk.Frame):
         self.button_aggiungi.grid(row=1, column=1, sticky='nswe', padx= self._padx, pady=self._pady)
         self.button_rimuovi=tk.Button(master=self, text='Rimuovi', font=self._frame_font, command=self.elimina_file) 
         self.button_rimuovi.grid(row=2, column=1, sticky='nswe', padx= self._padx, pady=self._pady)
-        self.button_esporta=tk.Button(master=self, text='Esporta', font=self._frame_font) 
+        self.button_esporta=tk.Button(master=self, text='Esporta', font=self._frame_font, command=self.esporta_file) 
         self.button_esporta.grid(row=3, column=1, sticky='nswe', padx= self._padx, pady=self._pady)
 
     
@@ -74,9 +75,9 @@ class FilesCommandPanel (tk.Frame):
             self.scelta_files['values'] = self.master.files_manager.get_files() #aggiorna visivamente Combobox
 
             if ret==True:
-                messagebox.showinfo(title='Successo', message='File creato con successo.')
+                messagebox.showinfo(title='Successo', message='File creato con successo')
             else:
-                messagebox.showerror(title = 'Errore', message='File gia\' esistente.')
+                messagebox.showerror(title = 'Errore', message='File gia\' esistente')
 
     def elimina_file(self):
         '''Elimina un file inserito dall'utente nella Combobox'''          
@@ -88,10 +89,32 @@ class FilesCommandPanel (tk.Frame):
             self.scelta_files['values'] = self.master.files_manager.get_files() #aggiorna visivamente Combobox
 
             if ret==True:
-                messagebox.showinfo(title='Successo', message='File rimosso con successo.')
+                messagebox.showinfo(title='Successo', message='File rimosso con successo')
             else:
-                messagebox.showerror(title = 'Errore', message='File inesistente.')
+                messagebox.showerror(title = 'Errore', message='File inesistente')
 
+    def esporta_file(self):
+        '''Esporta un file indicato dall'utente nella Combobox
+
+        self.master indica il Tk
+        files_manager.files indica il dizionario di FilesManager
+        [file_da_esportare] indica il file da esportare dentro FilesManager
+        dict_articoli indica il dizionario degli articoli in ArticlesManager del file da esportare
+        [articolo] indica la lista delle quantita' degli articoli da esportare
+        '''
+
+        file_da_esportare=self.scelta_files.get()
+
+        file_csv= open(file_da_esportare+'.csv', 'w')
+        file_csv.write("Articolo;Quantita';")
+
+        for articolo in self.master.files_manager.files[file_da_esportare].dict_articoli: 
+            for qty in self.master.files_manager.files[file_da_esportare].dict_articoli[articolo]:
+                file_csv.write('\n'+articolo+';'+qty)
+
+        file_csv.close()
+        
+        messagebox.showinfo(title='Successo', message='File esportato con successo')
 
 if __name__=='__main__': 
     app=tk.Tk() 

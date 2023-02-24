@@ -1,4 +1,10 @@
-'''Questo modulo contiene l'implementazione di funzioni che controllano i valori di articolo e quantita' inseriti dall'utente'''
+'''Questo modulo contiene l'implementazione di funzioni che controllano i valori di articolo e quantita' inseriti dall'utente
+
+Dipendenze:
+    pandas: libreria per la manipolazione di dati in file Excel    
+'''
+
+import pandas as pd
 
 def check_art(art:str) -> bool:
     '''Controlla il valore dell'articolo inserito dall'utente
@@ -30,6 +36,15 @@ def check_art(art:str) -> bool:
     for a in art:
         if 65<=ord(a)<=90 and a not in 'ZKHBSN': # 65= 'A', 90='Z'
             return False
+
+    file_excel = pd.read_excel('anagrafica_articoli.xls') #lettura file Excel
+
+    articoli_mp = file_excel.values #prende tutti i valori e li inserisce in una 2D numpy array
+    lista_articoli_mp = [str(val) for row in articoli_mp for val in row] #converte tutti i valori in stringhe e li mette in una lista
+
+    if art not in lista_articoli_mp:
+        return False
+
     return True
 
 def check_qty(qty:str) -> bool:

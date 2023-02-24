@@ -12,9 +12,11 @@ Esempio:
     obj.pack() 
     app.mainloop() 
 """
+
 import tkinter as tk 
 from check_valori import check_art, check_qty
 from tkinter import messagebox
+from video_detection import video_detection
 
 class ArticlesCommandPanel (tk.Frame): 
     ''' ArticlesCommandPanel e' un frame che contiene quattro label e quattro pulsanti.
@@ -52,7 +54,7 @@ class ArticlesCommandPanel (tk.Frame):
         for i, text in enumerate(['Avvia Lettura','Articolo', 'Qty', 'Inserisci', 'Cancella', 'Modifica', 'Qty da\nAggiornare']):
             tk.Label(master=self, text=text, font=self._frame_font).grid(row=i, column=0, sticky='nswe')
 
-        self.button_avvia=tk.Button(master=self, text='Avvia Lettura', font=self._frame_font) 
+        self.button_avvia=tk.Button(master=self, text='Avvia Lettura', font=self._frame_font, command=video_detection)
         self.button_avvia.grid(row=0, column=1, sticky='nswe', padx= self._padx, pady=self._pady)
         self.entry_art= tk.Entry(master=self, font=self._frame_font)
         self.entry_art.grid(row=1, column=1, sticky='nswe', padx= self._padx, pady=self._pady)
@@ -88,6 +90,8 @@ class ArticlesCommandPanel (tk.Frame):
         
         ret = self.master.files_manager.files[file_inserito].inser_val((articolo,qty))
         messagebox.showinfo(title='Successo', message='Record inserito con successo.')
+
+        print(self.master.files_manager.files)
 
     def elimina_qty(self):
         '''Elimina una quantita' presente in ArticlesManager inserita dall'utente, 

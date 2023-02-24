@@ -54,8 +54,6 @@ class App(tk.Tk):
         self.save_panel=SavePanel(master_window=self)
         self.save_panel.grid(row=1, column=1, sticky='nswe')
 
-        
-
 if __name__=='__main__': 
     obj=App()
     obj.mainloop() 

@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>AppInventario</Name>
     <RootNamespace>AppInventario</RootNamespace>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,8 +30,6 @@
     <Compile Include="interfaccia_grafica.py" />
     <Compile Include="save_panel.py" />
     <Compile Include="video_detection.py" />
-    <Compile Include="barcode_detection.py" />
-    <Compile Include="qr_detection.py" />
     <Compile Include="main.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
