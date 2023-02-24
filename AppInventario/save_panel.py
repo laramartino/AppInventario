@@ -71,7 +71,7 @@ class SavePanel (tk.Frame):
         pickle.dump(self.master.files_manager.files, dati_salvati)
         dati_salvati.close()
 
-        messagebox.showinfo(title='Successo', message= 'Dati salvati con successo')
+        messagebox.showinfo(title='Successo!', message= 'Dati salvati con successo')
 
     def carica_dati(self):
         '''Carica le modifiche effettuate dall'ultimo salvataggio dati grazie all'utilizzo del file binario pickle'''

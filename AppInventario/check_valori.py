@@ -1,7 +1,7 @@
 '''Questo modulo contiene l'implementazione di funzioni che controllano i valori di articolo e quantita' inseriti dall'utente
 
 Dipendenze:
-    pandas: libreria per la manipolazione di dati in file Excel    
+    pandas: libreria per la manipolazione dati in file Excel    
 '''
 
 import pandas as pd

@@ -77,19 +77,19 @@ class ArticlesCommandPanel (tk.Frame):
         qty=self.entry_qty_nuova.get()
 
         if file_inserito not in self.master.files_manager.files:
-            messagebox.showerror(title = 'Errore', message='File invalido.')
+            messagebox.showerror(title = 'Errore!', message='File invalido.')
             return 
 
         if check_art(articolo) == False:
-            messagebox.showerror(title = 'Errore', message='Articolo non valido.')
+            messagebox.showerror(title = 'Errore!', message='Articolo non valido.')
             return 
 
         if check_qty(qty) == False:
-            messagebox.showerror(title = 'Errore', message="Quantita' non valida.")
+            messagebox.showerror(title = 'Errore!', message="Quantita' non valida.")
             return
         
         ret = self.master.files_manager.files[file_inserito].inser_val((articolo,qty))
-        messagebox.showinfo(title='Successo', message='Record inserito con successo.')
+        messagebox.showinfo(title='Successo!', message='Record inserito con successo.')
 
         print(self.master.files_manager.files)
 
@@ -102,22 +102,22 @@ class ArticlesCommandPanel (tk.Frame):
         qty=self.entry_qty_nuova.get()
 
         if file_inserito not in self.master.files_manager.files:
-            messagebox.showerror(title = 'Errore', message='File invalido.')
+            messagebox.showerror(title = 'Errore!', message='File invalido.')
             return 
 
         if check_art(articolo) == False:
-            messagebox.showerror(title = 'Errore', message='Articolo non valido.')
+            messagebox.showerror(title = 'Errore!', message='Articolo non valido.')
             return 
 
         if check_qty(qty) == False:
-            messagebox.showerror(title = 'Errore', message="Quantita' non valida.")
+            messagebox.showerror(title = 'Errore!', message="Quantita' non valida.")
             return
         
         ret = self.master.files_manager.files[file_inserito].rimoz_val((articolo,qty))
         if ret==True:
-            messagebox.showinfo(title='Successo', message='Record rimosso con successo.')
+            messagebox.showinfo(title='Successo!', message='Record rimosso con successo.')
         else:
-            messagebox.showerror(title='Errore', message='Record invalido.')
+            messagebox.showerror(title='Errore!', message='Record invalido.')
 
     def modifica_qty(self):
         '''Modifica una quantita' di un articolo presente in ArticlesManager inserita dall'utente, 
@@ -129,30 +129,30 @@ class ArticlesCommandPanel (tk.Frame):
         old_qty=self.entry_qty_vecchia.get()
 
         if file_inserito not in self.master.files_manager.files:
-            messagebox.showerror(title = 'Errore', message='File invalido.')
+            messagebox.showerror(title = 'Errore!', message='File invalido.')
             return 
 
         if check_art(articolo) == False:
-            messagebox.showerror(title = 'Errore', message='Articolo non valido.')
+            messagebox.showerror(title = 'Errore!', message='Articolo non valido.')
             return 
 
         if check_qty(new_qty) == False:
-            messagebox.showerror(title = 'Errore', message="Quantita' non valida.")
+            messagebox.showerror(title = 'Errore!', message="Quantita' non valida.")
             return
 
         if old_qty not in self.master.files_manager.files[file_inserito].dict_articoli[articolo]:
-            messagebox.showerror(title = 'Errore', message="Quantita' non presente per l'articolo "+ articolo) 
+            messagebox.showerror(title = 'Errore!', message="Quantita' non presente per l'articolo "+ articolo) 
             return
 
         if check_qty(old_qty) == False:
-            messagebox.showerror(title = 'Errore', message="Quantita' non valida.")
+            messagebox.showerror(title = 'Errore!', message="Quantita' non valida.")
             return
         
         ret = self.master.files_manager.files[file_inserito].modifica_val((articolo,old_qty, new_qty))
         if ret==True:
-            messagebox.showinfo(title='Successo', message='Record modificato con successo.')
+            messagebox.showinfo(title='Successo!', message='Record modificato con successo.')
         else:
-            messagebox.showerror(title='Errore', message='Record invalido.')
+            messagebox.showerror(title='Errore!', message='Record invalido.')
 
 if __name__=='__main__': 
     app=tk.Tk() 

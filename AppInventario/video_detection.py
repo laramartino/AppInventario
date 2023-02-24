@@ -64,19 +64,11 @@ def video_detection(debug: int = 0) -> list:
             # disegna il triangolo di selezione intorno il barcode/QRcode nel frame
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-        #if len(set(decoded_text_list))==2:
-         #  print(set(decoded_text_list))
-
         # mostra il frame con il barcodes/QRcodes rilevato
         cv2.imshow('frame', frame)
 
-        # esce dal loop se viene premuto sulla tastiera 'q' 
-        #if cv2.waitKey(1) & 0xFF == ord('q'):
-         #   break
-
-        
-        if len(set(decoded_text_list))==2:
-           print(set(decoded_text_list))
+        #esce dal loop se viene premuto sulla tastiera 'q' 
+        if cv2.waitKey(1) & 0xFF == ord('q'):
            break
 
     # Rilascia la webcam e chiude la finestra

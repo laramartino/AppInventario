@@ -75,9 +75,9 @@ class FilesCommandPanel (tk.Frame):
             self.scelta_files['values'] = self.master.files_manager.get_files() #aggiorna visivamente Combobox
 
             if ret==True:
-                messagebox.showinfo(title='Successo', message='File creato con successo')
+                messagebox.showinfo(title='Successo!', message='File creato con successo')
             else:
-                messagebox.showerror(title = 'Errore', message='File gia\' esistente')
+                messagebox.showerror(title = 'Errore!', message='File gia\' esistente')
 
     def elimina_file(self):
         '''Elimina un file inserito dall'utente nella Combobox'''          
@@ -89,9 +89,9 @@ class FilesCommandPanel (tk.Frame):
             self.scelta_files['values'] = self.master.files_manager.get_files() #aggiorna visivamente Combobox
 
             if ret==True:
-                messagebox.showinfo(title='Successo', message='File rimosso con successo')
+                messagebox.showinfo(title='Successo!', message='File rimosso con successo')
             else:
-                messagebox.showerror(title = 'Errore', message='File inesistente')
+                messagebox.showerror(title = 'Errore!', message='File inesistente')
 
     def esporta_file(self):
         '''Esporta un file indicato dall'utente nella Combobox
@@ -114,7 +114,7 @@ class FilesCommandPanel (tk.Frame):
 
         file_csv.close()
         
-        messagebox.showinfo(title='Successo', message='File esportato con successo')
+        messagebox.showinfo(title='Successo!', message='File esportato con successo')
 
 if __name__=='__main__': 
     app=tk.Tk() 
