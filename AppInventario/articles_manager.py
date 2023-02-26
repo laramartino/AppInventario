@@ -5,13 +5,13 @@ Esempio:
     from articles_manager import ArticlesManager
 
     obj= ArticlesManager()
-    obj.inser_val(record=('90515689','1000'))
+    obj.insert_record(record=('90515689','1000'))
 
-    obj.rimoz_val(record=('90515689', '1000'))
+    obj.delete_record(record=('90515689', '1000'))
 
-    obj.modifica_val(record=('90515689', '500', '1000'))
+    obj.modify_record(record=('90515689', '500', '1000'))
 
-    obj.insert_list_val([('90515689','1000'),('90515689','500'),('90515689','300')])    
+    obj.insert_records_list([('90515689','1000'),('90515689','500'),('90515689','300')])    
 """
 
 class ArticlesManager:
@@ -30,8 +30,10 @@ class ArticlesManager:
 
         self.dict_articoli = {}
 
-    def inser_val(self, record: tuple) -> bool:
+    def insert_record(self, record: tuple) -> bool:
         """Data una tupla, inserisce il record in ArticlesManager.
+        
+        Se l'articolo non e' presente tra le chiavi, crea una coppia chiave-valori di tipo str: list.
 
         Arg:
             record (tuple): tupla (articolo, quantita') da inserire.
@@ -41,7 +43,7 @@ class ArticlesManager:
 
         Esempio:
             >>> obj= ArticlesManager()
-            >>> obj.inser_val(record=('90515689','1000'))
+            >>> obj.insert_record(record=('90515689','1000'))
             True    
         """
 
@@ -54,8 +56,11 @@ class ArticlesManager:
 
         return True
 
-    def rimoz_val(self, record: tuple) -> bool:
+    def delete_record(self, record: tuple) -> bool:
         """Data una tupla, rimuove la quantita' del record da ArticlesManager.
+        
+        Il metodo non rimuove la chiave articolo dal dizionario, nel caso non ci siano piu' quantita' relative
+        all'articolo, mantiene una lista vuota.
 
         Arg:
             record (tuple): tupla (articolo, quantita') da rimuovere.
@@ -65,8 +70,8 @@ class ArticlesManager:
 
         Esempio:
             >>> obj= ArticlesManager()
-            >>> obj.inser_val(record=('90515689','1000'))
-            >>> obj.rimoz_val(record=('90515689', '1000'))
+            >>> obj.insert_record(record=('90515689','1000'))
+            >>> obj.delete_record(record=('90515689', '1000'))
             True            
         """
 
@@ -82,7 +87,7 @@ class ArticlesManager:
                 del self.dict_articoli[art][pos]
                 return True
 
-    def modifica_val(self, record: tuple) -> bool:
+    def modify_record(self, record: tuple) -> bool:
         """Data una tupla, modifica una quantita' di un articolo gia' presente in ArticlesManager.
 
         Arg:
@@ -93,8 +98,8 @@ class ArticlesManager:
 
         Esempio:
             >>> obj= ArticlesManager()
-            >>> obj.inser_val(record=('90515689','1000'))
-            >>> obj.modifica_val(record=('90515689', '1000','500'))
+            >>> obj.insert_record(record=('90515689','1000'))
+            >>> obj.modify_record(record=('90515689', '1000','500'))
             True
         """
 
@@ -110,7 +115,7 @@ class ArticlesManager:
                 self.dict_articoli[art][pos] = new_qty
                 return True
 
-    def insert_list_val(self, lista_val: list) -> bool:
+    def insert_records_list(self, lista_val: list) -> bool:
         """Data una lista di tuple, inserisce tutti i record in ArticlesManager.
         
         Arg:
@@ -121,7 +126,7 @@ class ArticlesManager:
 
         Esempio:
             >>> obj= ArticlesManager()
-            >>> obj.insert_list_val([('90515689','1000'),('90515689','500'),('90515689','300')])
+            >>> obj.insert_records_list([('90515689','1000'),('90515689','500'),('90515689','300')])
             True            
         """
 
@@ -129,5 +134,5 @@ class ArticlesManager:
             return False
 
         for record in lista_val:
-            self.inser_val(record)
+            self.insert_record(record)
         return True
