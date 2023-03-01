@@ -30,7 +30,6 @@
     <Compile Include="interfaccia_grafica.py" />
     <Compile Include="save_panel.py" />
     <Compile Include="video_detection.py" />
-    <Compile Include="main.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

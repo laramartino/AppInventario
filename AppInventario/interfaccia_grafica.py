@@ -1,17 +1,16 @@
-""" Questo modulo contiene l'implementazione di App,
-una classe che contiene un'interfaccia utente.
+"""Questo modulo contiene l'implementazione di App, una classe che contiene un'interfaccia utente.
 
 Dipendenze:
     tkinter 
-    FilesCommandPanel: frame che contiene una Combobox, tre pulsanti e quattro label
-    ArticlesCommandPanel: frame che contiene quattro pulsanti e quattro label
-    SavePanel: frame che contiene una label e un pulsante
-    FilesManager: struttura dati che rappresenta gli inventari di diverse zone in MP
+    FilesCommandPanel: frame che contiene una combobox, tre pulsanti e quattro label.
+    ArticlesCommandPanel: frame che contiene quattro pulsanti e quattro label.
+    SavePanel: frame che contiene due label e due pulsanti.
+    FilesManager: struttura dati che rappresenta gli inventari di diverse zone in MP.
 
 Esempio:
     from interfaccia_grafica import App
 
-    obj=App()
+    obj = App()
     obj.mainloop() 
 """
 
@@ -22,38 +21,38 @@ from save_panel import SavePanel
 from files_manager import FilesManager
 
 class App(tk.Tk): 
-    ''' App e' un'interfaccia grafica per un'applicazione di gestione inventari.
+    """App e' un'interfaccia grafica per un'applicazione di gestione inventari.
 
     Attributi:
-        articles_command_panel (ArticlesCommandPanel): frame che contiene quattro pulsanti e quattro label
-        files_command_panel (FilesCommandPanel): frame che contiene una Combobox, tre pulsanti e quattro label
-        save_panel (SavePanel): frame che contiene una label e un pulsante
-    '''
+        articles_command_panel (ArticlesCommandPanel): frame che contiene quattro pulsanti e quattro label.
+        files_command_panel (FilesCommandPanel): frame che contiene una Combobox, tre pulsanti e quattro label.
+        save_panel (SavePanel): frame che contiene due label e due pulsanti.
+    """
 
     def __init__(self):
-        '''Inizializza App'''
+        """Inizializza App."""
 
         tk.Tk.__init__(self) 
         
-        self.files_manager=FilesManager()
+        self.files_manager = FilesManager()
 
         self.title('Barcode Detector') 
         self.geometry('800x800')
 
-        self.rowconfigure(index=0, weight=1)
-        self.rowconfigure(index=1, weight=1)
-        self.columnconfigure(index=0, weight=1)
-        self.columnconfigure(index=1, weight=1)
+        self.rowconfigure(index = 0, weight = 1)
+        self.rowconfigure(index = 1, weight = 1)
+        self.columnconfigure(index = 0, weight = 1)
+        self.columnconfigure(index = 1, weight = 1)
 
-        self.articles_command_panel=ArticlesCommandPanel(master_window=self)
-        self.articles_command_panel.grid(row=0, column=0, sticky='nswe', rowspan=2)
+        self.articles_command_panel = ArticlesCommandPanel(master_window = self)
+        self.articles_command_panel.grid(row = 0, column = 0, sticky = 'nswe', rowspan = 2)
 
-        self.files_command_panel=FilesCommandPanel(master_window=self) 
-        self.files_command_panel.grid(row=0, column=1, sticky='nswe') 
+        self.files_command_panel = FilesCommandPanel(master_window = self) 
+        self.files_command_panel.grid(row = 0, column = 1, sticky = 'nswe') 
 
-        self.save_panel=SavePanel(master_window=self)
-        self.save_panel.grid(row=1, column=1, sticky='nswe')
+        self.save_panel = SavePanel(master_window = self)
+        self.save_panel.grid(row = 1, column = 1, sticky = 'nswe')
 
-if __name__=='__main__': 
-    obj=App()
+if __name__ == '__main__': 
+    obj = App()
     obj.mainloop() 

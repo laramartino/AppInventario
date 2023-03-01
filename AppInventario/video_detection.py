@@ -21,7 +21,7 @@ def video_detection(debug: int = 0) -> list:
     """
 
     # apertura della videocamera
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
     # rileva i frame della webcam in loop
     while True:
