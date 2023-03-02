@@ -116,10 +116,3 @@ class FilesManager:
         """
 
         return list(self.files.keys())
-
-
-
-
-
-
-

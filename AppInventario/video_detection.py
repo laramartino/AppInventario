@@ -36,14 +36,13 @@ def video_detection(debug: int = 0) -> list:
 
         # per ogni barcode/QRcode decodificato, inserisce il rettangolo nel frame.
         # dopo inserisce il testo decodificato in una lista.
-        decoded_text_list = []
+        #decoded_text_list = []
+        decoded_text_list = set()
         for code in decoded_info:
             # estrae le coordinate del rettangolo di selezione e i dati di barcodes/QRcodes 
             (x, y, w, h) = code.rect
             data = code.data.decode("utf-8")
-            #print('decoded_text: ' + data)
-            decoded_text_list.append(data)
-        
+            decoded_text_list.add(data)
 
             # inserisce il testo decodificato nel frame
             font = cv2.FONT_HERSHEY_SIMPLEX
@@ -64,19 +63,18 @@ def video_detection(debug: int = 0) -> list:
             # disegna il triangolo di selezione intorno il barcode/QRcode nel frame
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
+        if len(decoded_text_list) == 2:
+            print(decoded_text_list)
+
         # mostra il frame con il barcodes/QRcodes rilevato
         cv2.imshow('frame', frame)
 
         #esce dal loop se viene premuto sulla tastiera 'q' 
         if cv2.waitKey(1) & 0xFF == ord('q'):
-           break
-
+            break
+        
     # Rilascia la webcam e chiude la finestra
     camera.release()
     cv2.destroyAllWindows()
 
     return decoded_text_list
-
-if __name__ == '__main__':
-    ret = video_detection()
-    print(ret)

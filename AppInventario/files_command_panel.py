@@ -96,10 +96,26 @@ class FilesCommandPanel (tk.Frame):
                 messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
 
     def export_file(self):
-        """Esporta un file indicato dall'utente nella Combobox in un file Excel"""
+        """Esporta un file indicato dall'utente nella Combobox in un file Excel, 
+        in cui gli articoli sono elencati in ordine alfabetico e le rispettive quantita' in ordine crescente.
+        
+        Uso della libreria openpyxl per l'inserimento dei codici come stringhe nel foglio Excel.
+        Esempio:
+            codice articolo: '00010012' 
+            con utilizzo di openpyxl: '00010012' (str) in Excel
+            senza utilizzo di openpyxl: '10012' (int) in Excel
+        """
 
         file_da_esportare = self.scelta_files.get()
-        
+
+        sorted_art = sorted(self.master.files_manager.files[file_da_esportare].dict_articoli.keys()) #articoli in ordine alfabetico.
+
+        sorted_file = {} #nuovo dizionario in cui inserire gli articoli ordinati.
+        for art in sorted_art:
+            sorted_file[art] = self.master.files_manager.files[file_da_esportare].dict_articoli[art]
+
+        sorted_file = {art: sorted(map(int,qty)) for art, qty in sorted_file.items()} #anche qty in ordine crescente con funzione map() per conversione in int.
+
         file_workbook = openpyxl.Workbook() #crea un Workbook che permette la scrittura su un file Excel.
         
         file_worksheet = file_workbook.active #seleziona il worksheet attivo.
@@ -107,13 +123,12 @@ class FilesCommandPanel (tk.Frame):
         header = ['Articolo', 'Quantita\'']
         file_worksheet.append(header)
 
-        for art in self.master.files_manager.files[file_da_esportare].dict_articoli: #percorso che indica il file_da_esportare.
-            for qty in self.master.files_manager.files[file_da_esportare].dict_articoli[art]: #percorso che indica la lista di qty di un articolo del file_da_esportare.
+        for art in sorted_file:
+            for qty in sorted_file[art]:
                 record = [art, qty]
                 file_worksheet.append(record)
 
-        file_workbook.save('files/' + file_da_esportare + '.xlsx') #salva il file Excel.
+        file_workbook.save('files/' + file_da_esportare + '.xlsx') #salva il file Excel. 
         
         messagebox.showinfo(title = 'Successo!', message = 'File esportato con successo.')
-
 

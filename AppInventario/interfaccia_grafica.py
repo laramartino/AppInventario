@@ -2,9 +2,10 @@
 
 Dipendenze:
     tkinter 
+    pickle
     FilesCommandPanel: frame che contiene una combobox, tre pulsanti e quattro label.
     ArticlesCommandPanel: frame che contiene quattro pulsanti e quattro label.
-    SavePanel: frame che contiene due label e due pulsanti.
+    SavePanel: frame che contiene una label e un pulsante.
     FilesManager: struttura dati che rappresenta gli inventari di diverse zone in MP.
 
 Esempio:
@@ -15,6 +16,7 @@ Esempio:
 """
 
 import tkinter as tk 
+import pickle
 from files_command_panel import FilesCommandPanel
 from articles_command_panel import ArticlesCommandPanel
 from save_panel import SavePanel
@@ -26,7 +28,7 @@ class App(tk.Tk):
     Attributi:
         articles_command_panel (ArticlesCommandPanel): frame che contiene quattro pulsanti e quattro label.
         files_command_panel (FilesCommandPanel): frame che contiene una Combobox, tre pulsanti e quattro label.
-        save_panel (SavePanel): frame che contiene due label e due pulsanti.
+        save_panel (SavePanel): frame che contiene una label e un pulsante.
     """
 
     def __init__(self):
@@ -52,6 +54,14 @@ class App(tk.Tk):
 
         self.save_panel = SavePanel(master_window = self)
         self.save_panel.grid(row = 1, column = 1, sticky = 'nswe')
+
+        #Caricamento delle modifiche effettuate dall'ultimo salvataggio dati, grazie all'utilizzo del file binario pickle.
+        dati_salvati = open('salvataggio_progressi/dati_salvati.pkl', 'rb') 
+        caricamento_dati = pickle.load(dati_salvati)
+        self.files_manager.files.update(caricamento_dati)
+        dati_salvati.close()
+
+        self.files_command_panel.scelta_files['values'] = [inventario for inventario in caricamento_dati.keys()] #aggiorna visivamente la Combobox.   
 
 if __name__ == '__main__': 
     obj = App()
