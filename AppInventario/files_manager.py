@@ -28,6 +28,7 @@ class FilesManager:
     Attributi:
         files (dict): dizionario che contiene i vari files inventario.
     """
+
     def __init__(self):
         """Inizializza FilesManager."""
 
@@ -97,8 +98,8 @@ class FilesManager:
             return []
         
         lista_articoli = []
-        for articolo in self.files[file_name].dict_articoli:
-            for qty in self.files[file_name].dict_articoli[articolo]:
+        for articolo in self.files[file_name].dict_articoli: #percorso che indica ArticlesManager del file da esportare.
+            for qty in self.files[file_name].dict_articoli[articolo]: #percorso che indica la lista delle qty di un articolo del file da esportare.
                 lista_articoli.append((articolo,qty))
 
         return lista_articoli 

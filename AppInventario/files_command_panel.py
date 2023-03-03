@@ -1,5 +1,5 @@
 """ Questo modulo contiene l'implementazione di FilesCommandPanel,
-una classe che contiene una combobox, tre label e tre pulsanti.
+una classe che contiene una combobox, quattro label e tre pulsanti.
 
 Dipendenze:
     tkinter 
@@ -20,7 +20,7 @@ from tkinter import messagebox
 import openpyxl
 
 class FilesCommandPanel (tk.Frame): 
-    """FilesCommandPanel e' un frame che contiene una combobox, tre label e tre pulsanti.
+    """FilesCommandPanel e' un frame che contiene una combobox, quattro label e tre pulsanti.
 
     Ogni pulsante ha associato un metodo relativo alla struttura dati di FilesManager.
 
@@ -43,30 +43,31 @@ class FilesCommandPanel (tk.Frame):
         self.master = master_window
 
         self._frame_font ='calibri 20'
-        self._padx = 10
-        self._pady = 30 
+        self._padx = 20
+        self._pady = 70 
 
-        for i in range(4):
+        for i in range(5):
             self.rowconfigure(index = i, weight = 1)
              
         self.columnconfigure(index = 0, weight = 1)
         self.columnconfigure(index = 1, weight = 1)
 
+        self.label_file = tk.Label(master = self, text = 'File', font = self._frame_font)
+        self.label_file.grid(row = 0, column = 0, sticky = 's', columnspan = 2)
+
         self.scelta_files = ttk.Combobox(master = self, values = [], font = self._frame_font)
-        self.scelta_files.grid(row = 0, column = 0, columnspan = 2) 
+        self.scelta_files.grid(row = 1, column = 0, columnspan = 2) 
 
         for i, text in enumerate(['Aggiungi File', 'Rimuovi File', 'Esporta File']):
-            tk.Label(master = self, text = text, font = self._frame_font).grid(row = i+1, column = 0, sticky = 'nswe')
+            tk.Label(master = self, text = text, font = self._frame_font).grid(row = i+2, column = 0, sticky = 'nswe')
 
-        
         self.button_aggiungi = tk.Button(master = self, text = 'Aggiungi', font = self._frame_font, command = self.create_file) 
-        self.button_aggiungi.grid(row = 1, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_aggiungi.grid(row = 2, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
         self.button_rimuovi = tk.Button(master = self, text = 'Rimuovi', font = self._frame_font, command = self.remove_file) 
-        self.button_rimuovi.grid(row = 2, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_rimuovi.grid(row = 3, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
         self.button_esporta = tk.Button(master = self, text = 'Esporta', font = self._frame_font, command = self.export_file) 
-        self.button_esporta.grid(row = 3, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_esporta.grid(row = 4, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
 
-    
     def create_file(self):
         """Crea e aggiunge un file inserito dall'utente nella Combobox"""       
         
@@ -108,27 +109,31 @@ class FilesCommandPanel (tk.Frame):
 
         file_da_esportare = self.scelta_files.get()
 
-        sorted_art = sorted(self.master.files_manager.files[file_da_esportare].dict_articoli.keys()) #articoli in ordine alfabetico.
+        if file_da_esportare not in self.master.files_manager.files:
+            messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
 
-        sorted_file = {} #nuovo dizionario in cui inserire gli articoli ordinati.
-        for art in sorted_art:
-            sorted_file[art] = self.master.files_manager.files[file_da_esportare].dict_articoli[art]
+        else:
+            sorted_art = sorted(self.master.files_manager.files[file_da_esportare].dict_articoli.keys()) #articoli in ordine alfabetico.
 
-        sorted_file = {art: sorted(map(int,qty)) for art, qty in sorted_file.items()} #anche qty in ordine crescente con funzione map() per conversione in int.
+            sorted_file = {} #nuovo dizionario in cui inserire gli articoli ordinati.
+            for art in sorted_art:
+                sorted_file[art] = self.master.files_manager.files[file_da_esportare].dict_articoli[art] #percorso che indica la lista delle qty di art nel file_da_esportare.
 
-        file_workbook = openpyxl.Workbook() #crea un Workbook che permette la scrittura su un file Excel.
+            sorted_file = {art: sorted(map(int,qty)) for art, qty in sorted_file.items()} #anche qty in ordine crescente con funzione map() per conversione in int.
+
+            file_workbook = openpyxl.Workbook() #crea un Workbook che permette la scrittura su un file Excel.
         
-        file_worksheet = file_workbook.active #seleziona il worksheet attivo.
+            file_worksheet = file_workbook.active #seleziona il worksheet attivo.
 
-        header = ['Articolo', 'Quantita\'']
-        file_worksheet.append(header)
+            header = ['Articolo', 'Quantita\'']
+            file_worksheet.append(header)
 
-        for art in sorted_file:
-            for qty in sorted_file[art]:
-                record = [art, qty]
-                file_worksheet.append(record)
+            for art in sorted_file:
+                for qty in sorted_file[art]:
+                    record = [art, qty]
+                    file_worksheet.append(record)
 
-        file_workbook.save('files/' + file_da_esportare + '.xlsx') #salva il file Excel. 
+            file_workbook.save('files/' + file_da_esportare + '.xlsx') #salva il file Excel. 
         
-        messagebox.showinfo(title = 'Successo!', message = 'File esportato con successo.')
+            messagebox.showinfo(title = 'Successo!', message = 'File esportato con successo.')
 

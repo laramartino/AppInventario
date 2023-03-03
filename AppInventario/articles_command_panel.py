@@ -1,5 +1,5 @@
 """Questo modulo contiene l'implementazione di ArticlesCommandPanel,
-una classe che contiene quattro label e quattro pulsanti.
+una classe che contiene sette label, quattro pulsanti e tre entries.
 
 Dipendenze:
     tkinter 
@@ -21,7 +21,7 @@ from check_valori import *
 from video_detection import video_detection
 
 class ArticlesCommandPanel (tk.Frame): 
-    """ArticlesCommandPanel e' un frame che contiene quattro label e quattro pulsanti.
+    """ArticlesCommandPanel e' un frame che contiene sette label, quattro pulsanti e tre entries.
 
     Ogni pulsante ha associato un metodo relativo alla struttura dati di ArticlesManager.
 
@@ -74,7 +74,7 @@ class ArticlesCommandPanel (tk.Frame):
     def insert_art_qty(self):
         """Aggiunge una coppia articolo-quantita' nuova inserito dall'utente nelle entries"""
 
-        file_inserito = self.master.files_command_panel.scelta_files.get()  #controllare che non sia null .
+        file_inserito = self.master.files_command_panel.scelta_files.get()  #controllare che non sia null.
         articolo = self.entry_art.get()
         qty = self.entry_qty_nuova.get()
 

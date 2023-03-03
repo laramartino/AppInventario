@@ -67,7 +67,7 @@ def video_detection(debug: int = 0) -> list:
             print(decoded_text_list)
 
         # mostra il frame con il barcodes/QRcodes rilevato
-        cv2.imshow('frame', frame)
+        cv2.imshow('frame', frame) 
 
         #esce dal loop se viene premuto sulla tastiera 'q' 
         if cv2.waitKey(1) & 0xFF == ord('q'):

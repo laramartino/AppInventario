@@ -21,7 +21,8 @@ def check_art(art:str) -> bool:
         art (str): stringa dell'articolo.
 
     Return:
-        False se la stringa ha una lunghezza diversa da 8 e vi sono lettere diverse da quelle sopra citate, altrimenti True.
+        False se la stringa ha una lunghezza diversa da 8, vi sono lettere diverse da quelle sopra citate o non e' presente nel catalogo MP, 
+        altrimenti True.
         
     Esempio:
         from check_valori import check_art
@@ -39,10 +40,11 @@ def check_art(art:str) -> bool:
 
     file_excel = pd.read_excel('anagrafica_articoli.xls') #lettura file Excel.
 
-    articoli_mp = file_excel.values #prende tutti i valori e li inserisce in una 2D numpy array.
-    lista_articoli_mp = [str(val) for row in articoli_mp for val in row] #converte tutti i valori in stringhe e li mette in una lista.
+    series_articoli_mp = pd.Series(file_excel['ARTICOLO']) #ndarray unidimensionale con indici di riga.
+    
+    articoli_mp = series_articoli_mp.to_string(index = False) #rappresentazione dei dati della Series come str.
 
-    if art not in lista_articoli_mp:
+    if art not in articoli_mp:
         return False
 
     return True
