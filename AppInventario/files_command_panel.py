@@ -92,9 +92,9 @@ class FilesCommandPanel (tk.Frame):
             self.scelta_files['values'] = self.master.files_manager.get_files() #aggiorna visivamente Combobox.
 
             if ret == True:
-                messagebox.showinfo(title = 'Successo!', message = 'File rimosso con successo.')
+                 messagebox.showinfo(title = 'Successo!', message = 'File rimosso con successo.')
             else:
-                messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
+                 messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
 
     def export_file(self):
         """Esporta un file indicato dall'utente nella Combobox in un file Excel, 

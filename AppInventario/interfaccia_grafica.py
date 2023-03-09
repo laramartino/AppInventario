@@ -66,7 +66,7 @@ class App(tk.Tk):
         La struttura dati FilesManager viene salvata in un file binario pickle.
         """
 
-        dati_salvati= open('salvataggio_progressi/dati_salvati.pkl', 'wb')
+        dati_salvati = open('salvataggio_progressi/dati_salvati.pkl', 'wb')
         pickle.dump(self.files_manager.files, dati_salvati)
         dati_salvati.close()
         self.destroy() 

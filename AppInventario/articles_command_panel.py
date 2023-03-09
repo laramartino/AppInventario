@@ -18,7 +18,7 @@ Esempio:
 import tkinter as tk 
 from tkinter import messagebox
 from check_valori import *
-from video_detection import video_detection
+from video_detection import VideoDetection 
 
 class ArticlesCommandPanel (tk.Frame): 
     """ArticlesCommandPanel e' un frame che contiene sette label, quattro pulsanti e tre entries.
@@ -42,6 +42,7 @@ class ArticlesCommandPanel (tk.Frame):
         tk.Frame.__init__(self, master = master_window, highlightbackground = 'black', highlightthickness = 2) 
 
         self.master = master_window
+        self.video_detection = VideoDetection(master_window = self) 
 
         self._frame_font = 'calibri 20'
         self._padx = 10
@@ -56,7 +57,7 @@ class ArticlesCommandPanel (tk.Frame):
         for i, text in enumerate(['Avvia Lettura', 'Articolo', 'Qty', 'Inserisci', 'Cancella', 'Modifica', 'Qty da\nAggiornare']):
             tk.Label(master = self, text = text, font = self._frame_font).grid(row = i, column = 0, sticky = 'nswe')
              
-        self.button_avvia = tk.Button(master = self, text = 'Avvia Lettura', font = self._frame_font, command = video_detection)
+        self.button_avvia = tk.Button(master = self, text = 'Avvia Lettura', font = self._frame_font, command = self.video_detection.video_detection)
         self.button_avvia.grid(row = 0, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
         self.entry_art = tk.Entry(master = self, font = self._frame_font)
         self.entry_art.grid(row = 1, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
@@ -65,7 +66,7 @@ class ArticlesCommandPanel (tk.Frame):
         self.button_insert = tk.Button(master = self, text = 'Inserisci', font = self._frame_font, command = self.insert_art_qty) 
         self.button_insert.grid(row = 3, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
         self.button_cancella = tk.Button(master = self, text = 'Cancella', font = self._frame_font, command = self.remove_qty) 
-        self.button_cancella.grid(row=4, column=1, sticky='nswe', padx= self._padx, pady=self._pady)
+        self.button_cancella.grid(row = 4, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
         self.button_modifica = tk.Button(master = self, text = 'Modifica', font = self._frame_font, command = self.modify_qty) 
         self.button_modifica.grid(row = 5, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
         self.entry_qty_vecchia = tk.Entry(master = self, font = self._frame_font)
