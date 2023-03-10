@@ -4,7 +4,7 @@ Dipendenze:
     tkinter 
     pickle
     FilesCommandPanel: frame che contiene una combobox, tre pulsanti e quattro label.
-    ArticlesCommandPanel: frame che contiene quattro pulsanti, sette label e tre entries.
+    ArticlesCommandPanel: frame che contiene quattro pulsanti, tre label e tre entries.
     FilesManager: struttura dati che rappresenta gli inventari di diverse zone in MP.
 
 Esempio:
@@ -24,8 +24,8 @@ class App(tk.Tk):
     """App e' un'interfaccia grafica per un'applicazione di gestione inventari.
 
     Attributi:
-        articles_command_panel (ArticlesCommandPanel): frame che contiene quattro pulsanti, sette label e tre entries.
-        files_command_panel (FilesCommandPanel): frame che contiene una Combobox, tre pulsanti e quattro label.
+        articles_command_panel (ArticlesCommandPanel): frame che contiene quattro pulsanti, tre label e tre entries.
+        files_command_panel (FilesCommandPanel): frame che contiene una Combobox, tre pulsanti e una label.
     """
 
     def __init__(self):

@@ -1,12 +1,13 @@
-'''Questo modulo contiene l'implementazione di video_detection,
-una funzione che permette la rilevazione e la decodifica di barcodes e QRcodes
+"""Questo modulo contiene l'implementazione di VideoDetection,
+una classe contenente quattro metodi relativi alla decodifica di barcodes
+e all'inserimento delle informazioni rilevate nelle struttura dati FilesManager e ArticlesManager.
 
 Dipendenze:
-    cv2 (OpenCV): libreria riguardo la visione artificiale in tempo reale
-    pyzbar: libreria di supporto a cv2
+    cv2 (OpenCV): libreria riguardo la visione artificiale in tempo reale.
+    pyzbar: libreria di supporto a cv2.
     tkinter
-    check_valori: modulo contenente l'implementazione di funzioni che controllano i valori di articolo e quantita' rilevati
-'''
+    check_valori: modulo contenente l'implementazione di funzioni che controllano i valori di articolo e quantita' rilevati.
+"""
 
 import cv2
 from pyzbar import pyzbar
@@ -15,14 +16,34 @@ import tkinter as tk
 from tkinter import messagebox 
 
 class VideoDetection:
+    """VideoDetection e' una classe con quattro metodi relativi alla decodifica di barcodes
+    e all'inserimento delle informazioni rilevate nelle strutture dati FilesManager e ArticlesManager.
+
+    Attributi:
+        entry_art (None): nei metodi diventa una entry per la manipolazione dell'articolo rilevato.
+        entry_qty (None): nei metodi diventa una entry per la manipolazione della quantita' rilevata.
+        popup (None): nei metodi diventa un tk.Toplevel.
+    """
 
     def __init__(self, master_window: tk.Tk):
+        """Inizializza VideoDetection con master_window.
+
+        Argomenti:
+            master_window (tk.Tk): applicazione padre.
+        """
+
         self.vd_master = master_window 
         self.entry_art = None 
         self.entry_qty = None
         self.popup = None
 
     def show_popup(self, decoded_text: list):
+        """Quando vengono rilevati i barcodes, 
+        viene mostrato un tk.Toplevel con due entries e due button.
+
+        Arg:
+            decoded_text (list): lista contenente articolo e quantita' da inserire.
+        """
 
         if check_art(decoded_text[0]) == True and check_qty(decoded_text[1]) == True:
             art = decoded_text[0]
@@ -32,6 +53,7 @@ class VideoDetection:
             art = decoded_text[1]
         else:
             messagebox.showerror(title = 'Errore!', message = 'Articolo e\o quantita\' non validi.')
+            self.popup.destroy()
 
         self.popup = tk.Toplevel()
         self.popup.title('Codici rilevati')
@@ -73,21 +95,24 @@ class VideoDetection:
         self.entry_qty.insert(0, qty)
 
         tk.Button(self.popup, text = 'Aggiungi', font = font, command = self.insert_video_record).grid(row = 2, column = 0, sticky = 'nswe')
-        tk.Button(self.popup, text = 'Nuova Lettura', font = font, command = lambda: [self.popup.destroy(), self.restart_video_detection()]).grid(row = 2, column = 1, sticky = 'nswe')
-        self.popup.grab_set()
+        tk.Button(self.popup, text = 'Nuova Lettura', font = font, command = self.restart_video_detection).grid(row = 2, column = 1, sticky = 'nswe')
         self.popup.mainloop()   
         
     def restart_video_detection(self):
+        """Avvia una nuova lettura di barcodes"""
 
+        self.popup.destroy()
         cv2.destroyAllWindows()
         self.video_detection()
 
     def insert_video_record(self):
+        """Inserisce articolo e quantita' rilevati nel file selezionato"""
 
         file = self.vd_master.master.files_command_panel.scelta_files.get()
-        if file == '' or file == ' ':
-            messagebox.showerror(title = 'Errore!', message = 'File invalido.')
+        if file not in self.vd_master.master.files_manager.files:
+            messagebox.showerror(title = 'Errore!', message = 'Seleziona un File esistente.')
             self.popup.destroy()
+            cv2.destroyAllWindows()
         else:
             self.vd_master.master.files_manager.insert_file(file)
 
@@ -95,8 +120,7 @@ class VideoDetection:
         qty = self.entry_qty.get()
         self.vd_master.master.files_manager.files[file].insert_record((art, qty))
 
-        self.popup.destroy()
-        cv2.destroyAllWindows()
+        self.restart_video_detection()
 
     def video_detection(self, debug: int = 0) -> list:
         """Rileva barcodes/QRcodes dalla webcam del PC e ritorna i testi decodificati.
@@ -151,14 +175,14 @@ class VideoDetection:
               cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)        
 
            # mostra il frame con il barcodes/QRcodes rilevato
-           cv2.imshow('frame', frame) 
+           cv2.imshow('Frame', frame) 
 
            if len(decoded_text) == 2:
               decoded_text = list(decoded_text)
               self.show_popup(decoded_text)
 
-            #esce dal loop se viene premuto sulla tastiera 'q' 
-           if cv2.waitKey(1) and cv2.getWindowProperty('frame', cv2.WND_PROP_VISIBLE) < 1:
+            #esce dal loop se viene premuto X in alto a dx della pc camera 
+           if cv2.waitKey(1) and cv2.getWindowProperty('Frame', cv2.WND_PROP_VISIBLE) < 1:
               break
                
         # Rilascia la webcam e chiude la finestra

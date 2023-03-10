@@ -1,9 +1,10 @@
 """ Questo modulo contiene l'implementazione di FilesCommandPanel,
-una classe che contiene una combobox, quattro label e tre pulsanti.
+una classe che contiene una combobox, una label e tre pulsanti.
 
 Dipendenze:
     tkinter 
     openpyxl: libreria con funzionalita' di scrittura e lettura di file Excel
+    configparser: libreria utile alla lettura di file di configurazione per l'esportazione dei file Excel
 
 Esempio:
     from files_command_panel import FilesCommandPanel
@@ -18,9 +19,10 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import openpyxl
+import configparser
 
 class FilesCommandPanel (tk.Frame): 
-    """FilesCommandPanel e' un frame che contiene una combobox, quattro label e tre pulsanti.
+    """FilesCommandPanel e' un frame che contiene una combobox, una label e tre pulsanti.
 
     Ogni pulsante ha associato un metodo relativo alla struttura dati di FilesManager.
 
@@ -50,23 +52,19 @@ class FilesCommandPanel (tk.Frame):
             self.rowconfigure(index = i, weight = 1)
              
         self.columnconfigure(index = 0, weight = 1)
-        self.columnconfigure(index = 1, weight = 1)
 
         self.label_file = tk.Label(master = self, text = 'File', font = self._frame_font)
-        self.label_file.grid(row = 0, column = 0, sticky = 's', columnspan = 2)
+        self.label_file.grid(row = 0, column = 0, sticky = 's')
 
         self.scelta_files = ttk.Combobox(master = self, values = [], font = self._frame_font)
-        self.scelta_files.grid(row = 1, column = 0, columnspan = 2) 
+        self.scelta_files.grid(row = 1, column = 0) 
 
-        for i, text in enumerate(['Aggiungi File', 'Rimuovi File', 'Esporta File']):
-            tk.Label(master = self, text = text, font = self._frame_font).grid(row = i+2, column = 0, sticky = 'nswe')
-
-        self.button_aggiungi = tk.Button(master = self, text = 'Aggiungi', font = self._frame_font, command = self.create_file) 
-        self.button_aggiungi.grid(row = 2, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.button_rimuovi = tk.Button(master = self, text = 'Rimuovi', font = self._frame_font, command = self.remove_file) 
-        self.button_rimuovi.grid(row = 3, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.button_esporta = tk.Button(master = self, text = 'Esporta', font = self._frame_font, command = self.export_file) 
-        self.button_esporta.grid(row = 4, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_aggiungi = tk.Button(master = self, text = 'Aggiungi File', font = self._frame_font, command = self.create_file) 
+        self.button_aggiungi.grid(row = 2, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_rimuovi = tk.Button(master = self, text = 'Rimuovi File', font = self._frame_font, command = self.remove_file) 
+        self.button_rimuovi.grid(row = 3, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_esporta = tk.Button(master = self, text = 'Esporta File', font = self._frame_font, command = self.export_file) 
+        self.button_esporta.grid(row = 4, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
 
     def create_file(self):
         """Crea e aggiunge un file inserito dall'utente nella Combobox"""       
@@ -107,6 +105,10 @@ class FilesCommandPanel (tk.Frame):
             senza utilizzo di openpyxl: '10012' (int) in Excel
         """
 
+        configuration_file = configparser.ConfigParser()
+        configuration_file.read('export.ini')
+        dest_path = configuration_file['EXPORT']['destination'] 
+
         file_da_esportare = self.scelta_files.get()
 
         if file_da_esportare not in self.master.files_manager.files:
@@ -133,7 +135,7 @@ class FilesCommandPanel (tk.Frame):
                     record = [art, qty]
                     file_worksheet.append(record)
 
-            file_workbook.save('files/' + file_da_esportare + '.xlsx') #salva il file Excel. 
+            file_workbook.save(dest_path + '/files/' + file_da_esportare + '.xlsx') #salva il file Excel nel percorso indicato. 
         
             messagebox.showinfo(title = 'Successo!', message = 'File esportato con successo.')
 
