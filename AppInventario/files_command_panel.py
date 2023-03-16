@@ -45,8 +45,15 @@ class FilesCommandPanel (tk.Frame):
         self.master = master_window
 
         self._frame_font ='calibri 20'
+        self.relief = 'solid'
+        self.borderwidth = 1
         self._padx = 20
         self._pady = 70 
+
+        #bordi per Combobox
+        self.style_combobox = ttk.Style()
+        self.style_combobox.theme_use('default')
+        self.style_combobox.configure('Custom.TCombobox', relief = 'solid', borderwidth = 3)
 
         for i in range(5):
             self.rowconfigure(index = i, weight = 1)
@@ -56,14 +63,14 @@ class FilesCommandPanel (tk.Frame):
         self.label_file = tk.Label(master = self, text = 'File', font = self._frame_font)
         self.label_file.grid(row = 0, column = 0, sticky = 's')
 
-        self.scelta_files = ttk.Combobox(master = self, values = [], font = self._frame_font)
+        self.scelta_files = ttk.Combobox(master = self, style = 'Custom.TCombobox', values = [], font = self._frame_font)
         self.scelta_files.grid(row = 1, column = 0) 
 
-        self.button_aggiungi = tk.Button(master = self, text = 'Aggiungi File', font = self._frame_font, command = self.create_file) 
+        self.button_aggiungi = tk.Button(master = self, text = 'Aggiungi File', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.create_file) 
         self.button_aggiungi.grid(row = 2, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.button_rimuovi = tk.Button(master = self, text = 'Rimuovi File', font = self._frame_font, command = self.remove_file) 
+        self.button_rimuovi = tk.Button(master = self, text = 'Rimuovi File', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.remove_file) 
         self.button_rimuovi.grid(row = 3, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.button_esporta = tk.Button(master = self, text = 'Esporta File', font = self._frame_font, command = self.export_file) 
+        self.button_esporta = tk.Button(master = self, text = 'Esporta File', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.export_file) 
         self.button_esporta.grid(row = 4, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
 
     def create_file(self):

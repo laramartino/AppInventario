@@ -36,7 +36,7 @@ class App(tk.Tk):
         self.files_manager = FilesManager()
 
         self.title('Barcode Detector') 
-        self.geometry('800x800')
+        self.geometry('800x770+0+0') #0+0 la finestra appare in alto a sx della schermata
 
         self.rowconfigure(index = 0, weight = 1)
         self.columnconfigure(index = 0, weight = 1)
