@@ -1,7 +1,6 @@
-"""Questo modulo contiene l'implementazione della classe ArticlesManager,
-una classe che rappresenta una struttura dati.
+"""This module contains the ArticlesManager implementation, a class representing a data structure.
 
-Esempio:
+Example:
     from articles_manager import ArticlesManager
 
     obj = ArticlesManager()
@@ -15,33 +14,33 @@ Esempio:
 """
 
 class ArticlesManager:
-    """ArticlesManager e' una struttura dati che rappresenta il contenuto di un file inventario.
+    """ArticlesManager is the data structure representing the content of an inventory file.
 
-    La struttura dati organizza i valori in un dizionario nel seguente modo:
-    - chiave (str): articolo.
-    - valore (list): lista di str che rappresentano le quantita'.
+    The data structure is a dictionary organized as follows:
+    - key (str): article.
+    - value (list): list of quantities as string.
 
-    Attributi:
-        dict_articoli (dict): dizionario che contiene le varie letture di tuple (articolo, quantita').
+    Attributes:
+        dict_articoli (dict): dictionary containing tuples (article, quantity).
     """
 
     def __init__(self):
-        """Inizializza ArticlesManager."""
+        """Initialize ArticlesManager."""
 
         self.dict_articoli = {}
 
     def insert_record(self, record: tuple) -> bool:
-        """Data una tupla, inserisce il record in ArticlesManager.
-        
-        Se l'articolo non e' presente tra le chiavi, crea una coppia chiave-valori di tipo str: list.
+        """Given a tuple, insert the record into ArticlesManager.
+
+        If the article is not present in the keys, create a new key-value pair.
 
         Arg:
-            record (tuple): tupla (articolo, quantita') da inserire.
+            record (tuple): tuple (article, quantity) to insert.
 
         Return:
-            bool: True se operazione effettuata correttamente.
+            bool: True if succesful.
 
-        Esempio:
+        Example:
             >>> obj = ArticlesManager()
             >>> obj.insert_record(record = ('90515689','1000'))
             True    
@@ -57,18 +56,17 @@ class ArticlesManager:
         return True
 
     def delete_qty(self, record: tuple) -> bool:
-        """Data una tupla, rimuove la quantita' del record da ArticlesManager.
-        
-        Il metodo non rimuove la chiave articolo dal dizionario, nel caso non ci siano piu' quantita' relative
-        all'articolo, mantiene una lista vuota.
+        """Given a tuple, delete the quantity of record from ArticlesManager.
+
+        If there are not quantities for an article, the method does not delete the article, but it has an empty list.
 
         Arg:
-            record (tuple): tupla (articolo, quantita') da rimuovere.
+            record (tuple): tuple (article, quantity) with quantity to delete.
 
         Return:
-            bool: False se l'articolo non e' presente o se la quantita' non e' presente nell'articolo, altrimenti True.
+            bool: False if the article is not in ArticlesManager or if the quantity is not present in the article, otherwise True.
 
-        Esempio:
+        Example:
             >>> obj = ArticlesManager()
             >>> obj.insert_record(record = ('90515689','1000'))
             >>> obj.delete_record(record = ('90515689', '1000'))
@@ -88,15 +86,15 @@ class ArticlesManager:
                 return True
 
     def modify_record(self, record: tuple) -> bool:
-        """Data una tupla, modifica una quantita' di un articolo gia' presente in ArticlesManager.
+        """Given a tuple, modify a quantity of an article in ArticleManager.
 
         Arg:
-            record (tuple): tupla (articolo, precedente_quantita', nuova_quantita').
+            record (tuple): tuple (article, old_quantity, new_quantity).
 
         Return:
-            bool: False se l'articolo non e' presente o se la precedente quantita' non e' presente nell'articolo, altrimenti True.
+            bool: False if the article is not in ArticlesManager or if the old_quantity is not present in the article, otherwise True.
 
-        Esempio:
+        Example:
             >>> obj = ArticlesManager()
             >>> obj.insert_record(record = ('90515689','1000'))
             >>> obj.modify_record(record = ('90515689', '1000','500'))
@@ -116,23 +114,25 @@ class ArticlesManager:
                 return True
 
     def insert_records_list(self, lista_val: list) -> bool:
-        """Data una lista di tuple, inserisce tutti i record in ArticlesManager.
+        """Given a list of tuples, insert all records in ArticlesManager.
         
         Arg:
-            lista_val(list): lista di tuple (articolo, quantita') da inserire.
+            lista_val (list): list of tuples (article, quantity) to insert.
 
         Return:
-            bool: False se la lista e' vuota, altrimenti True.
+            bool: False if the list is empty, otherwise True.
 
-        Esempio:
+        Example:
             >>> obj = ArticlesManager()
             >>> obj.insert_records_list([('90515689','1000'),('90515689','500'),('90515689','300')])
             True            
         """
 
-        if not lista_val: #lista vuota
+        if not lista_val: #empty list.
             return False
 
         for record in lista_val:
             self.insert_record(record)
         return True
+
+

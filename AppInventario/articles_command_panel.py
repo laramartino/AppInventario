@@ -1,12 +1,11 @@
-"""Questo modulo contiene l'implementazione di ArticlesCommandPanel,
-una classe che contiene tre label, quattro pulsanti e tre entries.
+"""This module contains ArticlesCommandPanel implementation, a class containing three labels, four buttons and three entries.
 
-Dipendenze:
+Dependencies:
     tkinter 
-    check_valori: modulo contenente l'implementazione di funzioni che controllano i valori di articolo e quantita' inseriti dall'utente.
-    video_detection: modulo contentente l'implementazione della funzione di rilevazione e decodifica di barcodes/QRcodes
+    check_valori: the module containing the implementation of functions that check the values of article and quantity inserted by user. 
+    video_detection: the module containing VideoDetection implementation.
 
-Esempio:
+Example:
     from articles_command_panel import ArticlesCommandPanel
 
     app = tk.Tk() 
@@ -17,26 +16,26 @@ Esempio:
 
 import tkinter as tk 
 from tkinter import messagebox
-from check_valori import *
+from check_values import *
 from video_detection import VideoDetection 
 
 class ArticlesCommandPanel (tk.Frame): 
-    """ArticlesCommandPanel e' un frame che contiene tre label, quattro pulsanti e tre entries.
+    """ArticlesCommandPanel is a frame containing three labels, four buttons and three entries.
 
-    Ogni pulsante ha associato un metodo relativo alla struttura dati di ArticlesManager.
+    Each method related to the ArticlesManager data structure is associated with a button.
 
-    Attributi:
-        button_avvia (tk.Button): pulsante con associata funzionalita' di lettura di QRcodes/barcodes.
-        button_insert (tk.Button): pulsante con associata funzionalita' di inserimento files.
-        button_modifica (tk.Button): pulsante con associata funzionalita' di modifica files.
-        button_cancella (tk.Button): pulsante con associata funzionalita' di rimozione files.
+    Attributes:
+        button_detection (tk.Button): button for detecting and decoding barcodes.
+        button_insert (tk.Button): button for adding records.
+        button_modify (tk.Button): button for modifying a quantity of an article.
+        button_delete (tk.Button): button for deleting a quantity of an article.
     """
 
     def __init__(self, master_window: tk.Tk):
-        """Inizializza ArticlesCommandPanel con master_window.
+        """Initialize ArticlesCommandPanel with master_window.
 
-        Argomenti:
-            master_window (tk.Tk): applicazione padre.
+        Arg:
+            master_window (tk.Tk): master application.
         """
 
         tk.Frame.__init__(self, master = master_window, highlightbackground = 'black', highlightthickness = 2) 
@@ -60,33 +59,33 @@ class ArticlesCommandPanel (tk.Frame):
         tk.Label(master = self, text = 'Qty', font = self._frame_font).grid(row = 2, column = 0, sticky = 'nswe')
         tk.Label(master = self, text = 'Qty da\nAggiornare', font = self._frame_font).grid(row = 6, column = 0, sticky = 'nswe')
 
-        self.button_avvia = tk.Button(master = self, text = 'Avvia Lettura', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.video_detection.video_detection)
-        self.button_avvia.grid(row = 0, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
+        self.button_detection = tk.Button(master = self, text = 'Avvia Lettura', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.video_detection.video_detection)
+        self.button_detection.grid(row = 0, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
         self.entry_art = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
         self.entry_art.grid(row = 1, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.entry_qty_nuova = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
-        self.entry_qty_nuova.grid(row = 2, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.button_inserisci = tk.Button(master = self, text = 'Inserisci', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.insert_art_qty) 
-        self.button_inserisci.grid(row = 3, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
-        self.button_cancella = tk.Button(master = self, text = 'Cancella', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.remove_qty) 
-        self.button_cancella.grid(row = 4, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
-        self.button_modifica = tk.Button(master = self, text = 'Modifica', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.modify_qty) 
-        self.button_modifica.grid(row = 5, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
-        self.entry_qty_vecchia = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
-        self.entry_qty_vecchia.grid(row = 6, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.entry_new_qty = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
+        self.entry_new_qty.grid(row = 2, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_insert = tk.Button(master = self, text = 'Inserisci', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.insert_art_qty) 
+        self.button_insert.grid(row = 3, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
+        self.button_delete = tk.Button(master = self, text = 'Cancella', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.remove_qty) 
+        self.button_delete.grid(row = 4, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
+        self.button_modify = tk.Button(master = self, text = 'Modifica', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.modify_qty) 
+        self.button_modify.grid(row = 5, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
+        self.entry_old_qty = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
+        self.entry_old_qty.grid(row = 6, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
 
     def insert_art_qty(self):
-        """Aggiunge una coppia articolo-quantita' nuova inserito dall'utente nelle entries"""
+        """Add a new record article-quantity specified by the user to ArticlesManager."""
 
-        file_inserito = self.master.files_command_panel.scelta_files.get()  #controllare che non sia null.
-        articolo = self.entry_art.get()
-        qty = self.entry_qty_nuova.get()
+        inserted_file = self.master.files_command_panel.scelta_files.get()  
+        article = self.entry_art.get()
+        qty = self.entry_new_qty.get()
 
-        if file_inserito not in self.master.files_manager.files:
+        if inserted_file not in self.master.files_manager.files:
             messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
             return 
 
-        if check_art(articolo) == False:
+        if check_art(article) == False:
             messagebox.showerror(title = 'Errore!', message = 'Articolo non valido.')
             return 
 
@@ -94,21 +93,21 @@ class ArticlesCommandPanel (tk.Frame):
             messagebox.showerror(title = 'Errore!', message = 'Quantita\' non valida.')
             return
         
-        self.master.files_manager.files[file_inserito].insert_record((articolo, qty))
+        self.master.files_manager.files[inserted_file].insert_record((article, qty))
         messagebox.showinfo(title = 'Successo!', message = 'Record inserito con successo.')
 
     def remove_qty(self):
-        """Elimina una quantita' presente in ArticlesManager inserita dall'utente, indicando l'articolo corrispondente"""
+        """Delete a quantity of an article specified by the user from ArticlesManager."""
         
-        file_inserito = self.master.files_command_panel.scelta_files.get()  #controllare che non sia null.
-        articolo = self.entry_art.get()
-        qty = self.entry_qty_nuova.get()
+        inserted_file = self.master.files_command_panel.scelta_files.get()  
+        article = self.entry_art.get()
+        qty = self.entry_new_qty.get()
 
-        if file_inserito not in self.master.files_manager.files:
+        if inserted_file not in self.master.files_manager.files:
             messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
             return 
 
-        if check_art(articolo) == False:
+        if check_art(article) == False:
             messagebox.showerror(title = 'Errore!', message = 'Articolo non valido.')
             return 
 
@@ -116,25 +115,25 @@ class ArticlesCommandPanel (tk.Frame):
             messagebox.showerror(title = 'Errore!', message = 'Quantita\' non valida.')
             return
         
-        ret = self.master.files_manager.files[file_inserito].delete_qty((articolo, qty))
+        ret = self.master.files_manager.files[inserted_file].delete_qty((article, qty))
         if ret == True:
-            messagebox.showinfo(title = 'Successo!', message = 'Quantita\' rimossa con successo per l\'articolo ' + articolo)
+            messagebox.showinfo(title = 'Successo!', message = 'Quantita\' rimossa con successo per l\'articolo ' + article)
         else:
             messagebox.showerror(title = 'Errore!', message = 'Record invalido.')
 
     def modify_qty(self):
-        """Modifica una quantita' di un articolo presente in ArticlesManager inserita dall'utente, indicando l'articolo e la quantita' precedente corrispondente"""  
+        """Modify a quantity of an article in ArticlesManager, the user specifies the article and the old quantity."""  
         
-        file_inserito = self.master.files_command_panel.scelta_files.get()  #controllare che non sia null.
-        articolo = self.entry_art.get()
-        new_qty = self.entry_qty_nuova.get()
-        old_qty = self.entry_qty_vecchia.get()
+        inserted_file = self.master.files_command_panel.scelta_files.get()  
+        article = self.entry_art.get()
+        new_qty = self.entry_new_qty.get()
+        old_qty = self.entry_old_qty.get()
 
-        if file_inserito not in self.master.files_manager.files:
+        if inserted_file not in self.master.files_manager.files:
             messagebox.showerror(title = 'Errore!', message = 'File non esistente.')
             return 
 
-        if check_art(articolo) == False:
+        if check_art(article) == False:
             messagebox.showerror(title = 'Errore!', message = 'Articolo non valido.')
             return 
 
@@ -142,16 +141,19 @@ class ArticlesCommandPanel (tk.Frame):
             messagebox.showerror(title = 'Errore!', message = 'Quantita\' non valida.')
             return
 
-        if old_qty not in self.master.files_manager.files[file_inserito].dict_articoli[articolo]:
-            messagebox.showerror(title = 'Errore!', message = 'Quantita\' non presente per l\'articolo ' + articolo) 
+        if old_qty not in self.master.files_manager.files[inserted_file].dict_articoli[article]:
+            messagebox.showerror(title = 'Errore!', message = 'Quantita\' non presente per l\'articolo ' + article) 
             return
 
         if check_qty(old_qty) == False:
             messagebox.showerror(title = 'Errore!', message = 'Quantita\' da aggiornare non valida.')
             return
         
-        ret = self.master.files_manager.files[file_inserito].modify_record((articolo, old_qty, new_qty))
+        ret = self.master.files_manager.files[inserted_file].modify_record((article, old_qty, new_qty))
         if ret == True:
-            messagebox.showinfo(title = 'Successo!', message = 'Quantita\' modificata con successo per l\'articolo ' + articolo)
+            messagebox.showinfo(title = 'Successo!', message = 'Quantita\' modificata con successo per l\'articolo ' + article)
         else:
             messagebox.showerror(title = 'Errore!', message = 'Record invalido.')
+
+
+

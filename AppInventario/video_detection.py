@@ -1,35 +1,37 @@
-"""Questo modulo contiene l'implementazione di VideoDetection,
-una classe contenente quattro metodi relativi alla decodifica di barcodes
-e all'inserimento delle informazioni rilevate nelle struttura dati FilesManager e ArticlesManager.
+"""This module contains the VideoDetection implementation,
+a class containing four methods related to barcode decoding
+and inserting of detected data into FilesManager and ArticlesManager.
 
-Dipendenze:
-    cv2 (OpenCV): libreria riguardo la visione artificiale in tempo reale.
-    pyzbar: libreria di supporto a cv2.
+This module is also valid for QRcodes.
+
+Dependencies:
+    cv2 (OpenCV): open source computer vision and machine learning software library.
+    pyzbar: library that reads one-dimensional barcodes using the zbar library.
     tkinter
-    check_valori: modulo contenente l'implementazione di funzioni che controllano i valori di articolo e quantita' rilevati.
+    check_valori: module containing the implementation of functions that check the values of article and quantity detected.
 """
 
 import cv2
 from pyzbar import pyzbar
-from check_valori import *
+from check_values import *
 import tkinter as tk
 from tkinter import messagebox 
 
 class VideoDetection:
-    """VideoDetection e' una classe con quattro metodi relativi alla decodifica di barcodes
-    e all'inserimento delle informazioni rilevate nelle strutture dati FilesManager e ArticlesManager.
+    """VideoDetection is a class with four methods related to barcode decoding 
+    and inserting of detected data into FilesManager and ArticlesManager.
 
-    Attributi:
-        entry_art (None): nei metodi diventa una entry per la manipolazione dell'articolo rilevato.
-        entry_qty (None): nei metodi diventa una entry per la manipolazione della quantita' rilevata.
-        popup (None): nei metodi diventa un tk.Toplevel.
+    Attributes:
+        entry_art (None): in the methods it becomes an entry for manipulating the detected article.
+        entry_qty (None): in the methods it becomes an entry for manipulating the detected quantity.
+        popup (None): in the methods it becomes a tk.Toplevel.
     """
 
     def __init__(self, master_window: tk.Tk):
-        """Inizializza VideoDetection con master_window.
+        """Initialize VideoDetection with master_window.
 
-        Argomenti:
-            master_window (tk.Tk): applicazione padre.
+        Arg:
+            master_window (tk.Tk): master application.
         """
 
         self.vd_master = master_window 
@@ -38,11 +40,10 @@ class VideoDetection:
         self.popup = None
 
     def show_popup(self, decoded_text_list: list):
-        """Quando vengono rilevati i barcodes, 
-        viene mostrato un tk.Toplevel con due entries e due button.
+        """When barcodes are detected, a tk.Toplevel with two entries and two buttons appears.
 
         Arg:
-            decoded_text (list): lista contenente articolo e quantita' da inserire.
+            decoded_text (list): list containing article and quantity to insert.
         """
 
         popup_window = True
@@ -55,25 +56,25 @@ class VideoDetection:
             art = decoded_text_list[1]
         else:
             messagebox.showerror(title = 'Errore!', message = 'Articolo e\o quantita\' non validi.')
-            popup_window = False #non appare il popup
+            popup_window = False #popup does not appear in the next if.
 
         if popup_window: #if popup_window == True
             self.popup = tk.Toplevel()
             self.popup.title('Codici rilevati')
 
-            #dimensioni della finestra dello schermo
+            #display size.
             screen_width = self.popup.winfo_screenwidth()
             screen_height = self.popup.winfo_screenheight()
 
-            #dimensioni della finestra popup
+            #popup size.
             popup_width = 600
             popup_height = 300
 
-            #posizione x, y della finestra popup
+            #position (x,y) of the popup.
             x = int((screen_width / 2) - (popup_width / 2))
             y = int((screen_height / 2) - (popup_height / 2))
 
-            #finestra popup al centro dello schermo
+            #popup in the centre of the display.
             self.popup.geometry('{}x{}+{}+{}'.format(popup_width, popup_height, x, y))
 
             font = 'calibri 20'
@@ -86,40 +87,40 @@ class VideoDetection:
             self.popup.columnconfigure(index = 0, weight = 1)
             self.popup.columnconfigure(index = 1, weight = 1)
 
-            label_articolo = tk.Label(self.popup, text = 'Articolo: ', font = font)
-            label_articolo.grid(row = 0, column = 0, sticky = 'nswe')
+            label_art = tk.Label(self.popup, text = 'Articolo: ', font = font)
+            label_art.grid(row = 0, column = 0, sticky = 'nswe')
             self.entry_art = tk.Entry(self.popup, font = font)
             self.entry_art.grid(row = 0, column = 1, sticky = 'nswe', padx = padx, pady = pady)
             self.entry_art.insert(0, art)
-            label_quantita = tk.Label(self.popup, text = 'Qty: ', font = font)
-            label_quantita.grid(row = 1, column = 0, sticky = 'nswe')
+            label_qty = tk.Label(self.popup, text = 'Qty: ', font = font)
+            label_qty.grid(row = 1, column = 0, sticky = 'nswe')
             self.entry_qty = tk.Entry(self.popup, font = font)
             self.entry_qty.grid(row = 1, column = 1, sticky = 'nswe', padx = padx, pady = pady)
             self.entry_qty.insert(0, qty)
 
-            button_aggiungi = tk.Button(self.popup, text = 'Aggiungi', font = font, command = self.insert_video_record)
-            button_aggiungi.grid(row = 2, column = 0, sticky = 'nswe')
-            button_nuova_lettura = tk.Button(self.popup, text = 'Nuova Lettura', font = font, command = lambda : [self.popup.destroy(), self.video_detection()])
-            button_nuova_lettura.grid(row = 2, column = 1, sticky = 'nswe')   
+            button_insert = tk.Button(self.popup, text = 'Aggiungi', font = font, command = self.insert_video_record)
+            button_insert.grid(row = 2, column = 0, sticky = 'nswe')
+            button_new_detection = tk.Button(self.popup, text = 'Nuova Lettura', font = font, command = lambda : [self.popup.destroy(), self.video_detection()])
+            button_new_detection.grid(row = 2, column = 1, sticky = 'nswe')   
 
             self.popup.mainloop()
 
     def insert_video_record(self):
-        """Inserisce articolo e quantita' rilevati, ed eventualmente modificati, nel file selezionato"""
+        """Insert article and quantity detected in the selected file."""
 
-        file = self.vd_master.master.files_command_panel.scelta_files.get()
-        if file not in self.vd_master.master.files_manager.files:
+        selected_file = self.vd_master.master.files_command_panel.scelta_files.get()
+        if selected_file not in self.vd_master.master.files_manager.files:
             messagebox.showerror(title = 'Errore!', message = 'Seleziona un File esistente.')
             self.popup.destroy()
         else:
-            self.vd_master.master.files_manager.insert_file(file)
+            self.vd_master.master.files_manager.insert_file(selected_file)
 
             art = self.entry_art.get()
             qty = self.entry_qty.get()
 
-            #ulteriore controllo perche le entries possono essere modificate a seguito della lettura barcodes
+            #another check because the entries can be modified after detection.
             if check_art(art) == True and check_qty(qty) == True:
-                self.vd_master.master.files_manager.files[file].insert_record((art, qty))
+                self.vd_master.master.files_manager.files[selected_file].insert_record((art, qty))
             else:
                 messagebox.showerror(title = 'Errore!', message = 'Articolo e\o quantita\' non validi.')
             
@@ -127,39 +128,35 @@ class VideoDetection:
             self.video_detection()
 
     def video_detection(self, debug: int = 0) -> list:
-        """Rileva barcodes/QRcodes dalla webcam del PC e ritorna i testi decodificati.
+        """Detect barcodes from the PC camera and returns their decoded texts.
 
-        Args:
-            debug (int): un intero usato come flag per il debug purpose (default value: 0).
+        Arg:
+            debug (int): an integer used as a flag for debug purpose (default value: 0).
 
-        Returns:
-            decoded_text_list (list): lista contenente i testi decodificati di barcodes/QRcodes.
+        Return:
+            decoded_text_list (list): list containing the decoded texts of barcodes.
         """
 
-        # apertura della videocamera
-        camera = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+        camera = cv2.VideoCapture(1, cv2.CAP_DSHOW) #open the PC camera.
 
-        # rileva i frame della webcam in loop
+        #Loop over frames from the camera.
         while True:
-           #registra un frame dalla webcam
-           _, frame = camera.read()
+           _, frame = camera.read() #capture a frame from the camera.
 
-           # Converte il frame in scala di grigi
-           gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+           gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #convert the frame to grayscale.
 
-           # rileva e decodifica barcodes/QRcodes in frame in scala di grigi
-           decoded_info = pyzbar.decode(gray_frame)       
+           decoded_info = pyzbar.decode(gray_frame) #detect and decode barcodes in the grayscale frame.
 
-           # per ogni barcode/QRcode decodificato, inserisce il rettangolo nel frame.
-           # dopo inserisce il testo decodificato in una lista.
+           #For every decoded barcodes, put the rectangle in the frame.
+           #Then add the decoded text in a set.
            decoded_text = set()
            for code in decoded_info:
-                # estrae le coordinate del rettangolo di selezione e i dati di barcodes/QRcodes 
+                #Extract the bounding box coordinates and barcodes data. 
                 (x, y, w, h) = code.rect
                 data = code.data.decode("utf-8")
                 decoded_text.add(data)
 
-                # inserisce il testo decodificato nel frame
+                #Put the decoded text on the frame.
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 font_scale = 0.5
                 thickness = 1
@@ -175,19 +172,17 @@ class VideoDetection:
                      lineType = cv2.LINE_AA,
                 )
 
-                # disegna il rettangolo di selezione intorno il barcode/QRcode nel frame
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)        
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2) #draw the bounding box around the barcode on the frame.
 
-           #mostra il frame con il barcodes/QRcodes rilevato
-           cv2.imshow('Frame', frame)
+           cv2.imshow('Frame', frame) #show the frame with the detected barcodes.
             
            if len(decoded_text) == 2:
-               camera.release() #rilascia la webcam
-               cv2.destroyAllWindows() #chiude la finestra
+               camera.release() #release the camera.
+               cv2.destroyAllWindows() #close the window.
                decoded_text_list = list(decoded_text)
                self.show_popup(decoded_text_list)
 
-            #esce dal loop se viene premuto X in alto a dx della pc camera
+           #Exit the loop if the user clicks the 'X' button at the top right of the PC camera window.
            if cv2.waitKey(1) and cv2.getWindowProperty('Frame', cv2.WND_PROP_VISIBLE) < 1:
                camera.release()
                cv2.destroyAllWindows()
@@ -197,3 +192,4 @@ class VideoDetection:
         return decoded_text_list
 
     
+

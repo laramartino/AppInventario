@@ -1,10 +1,9 @@
-"""Questo modulo contiene l'implementazione della classe FilesManager,
-una classe che rappresenta una struttura dati.
+"""This module contains the FilesManager implementation, a class representing a data structure.
 
-Dipendenze:
-    articles_manager (implementazione della classe ArticlesManager)  
+Dependencies:
+    articles_manager: ArticlesManager implementation.  
 
-Esempio:
+Example:
     from files_manager import FilesManager
 
     obj = FilesManager()
@@ -19,31 +18,31 @@ Esempio:
 from articles_manager import ArticlesManager
 
 class FilesManager:
-    """FilesManager e' una struttura dati che rappresenta gli inventari di diverse zone in MP.
+    """FilesManager is the data structure representing the inventories of different areas in MP.
 
-    La struttura dati organizza i valori in un dizionario nel seguente modo:
-    - chiave (str): nome del file.
-    - valore (ArticlesManager): oggetto ArticlesManager che rappresenta il contenuto di un file inventario.
+    The data structure is a dictionary organized as follows:
+    - key (str): filename
+    - value (ArticlesManager): ArticlesManager object representing the content of an inventory file.
 
-    Attributi:
-        files (dict): dizionario che contiene i vari files inventario.
+    Attributes:
+        files (dict): dictionary containing the different inventory files.
     """
 
     def __init__(self):
-        """Inizializza FilesManager."""
+        """Initialize FilesManager."""
 
         self.files = {}
 
     def insert_file(self, file_name: str) -> bool:
-        """Dato un nome file, crea una nuova zona in FilesManager.
+        """Inserted a filename, create a new key in FilesManager.
 
         Arg:
-            file_name (str): nome del file da inserire.
+            file_name (str): filename to add.
 
         Return:
-            bool: False se il nome del file e' gia' presente, altrimenti True.
+            bool: False if the filename already exists, otherwise True.
 
-        Esempio:
+        Example:
             >>> obj = FilesManager()
             >>> obj.insert_file('inventario1')
             True
@@ -56,15 +55,15 @@ class FilesManager:
         return True
 
     def delete_file (self, file_name: str) -> bool:
-        """Dato un nome file esistente, elimina una zona in FilesManager.
+        """Inserted an existing filename, the related key is deleted from FilesManager.
 
         Arg:
-            file_name (str): nome del file da rimuovere.
+            file_name (str): filename to delete.
 
         Return:
-            bool: False se il nome del file non e' presente, altrimenti True.
+            bool: False if the filename doesn't exist in FilesManager, otherwise True.
 
-        Esempio:
+        Example:
             >>> obj = FilesManager()
             >>> obj.insert_file('inventario1')
             >>> obj.delete_file('inventario1')
@@ -78,15 +77,15 @@ class FilesManager:
         return True
 
     def export_file(self, file_name: str) -> list:
-        """Dato un nome file esistente, esporta il contenuto in una lista di tuple.
+        """Inserted an existing filename, the content is exported in a list of tuples.
 
         Arg:
-            file_name (str): nome del file da esportare.
+            file_name (str): filename to export.
 
         Return:
-            lista_articoli (list): lista vuota se il file non e' presente, altrimenti lista di tuple.
+            lista_articoli (list): empty list if the file doesn't exist, otherwise a list of tuples.
 
-        Esempio:
+        Example:
             >>> obj = FilesManager()
             >>> obj.insert_file('inventario1')
             >>> obj.files['inventario1'].insert_records_list([('12567345','500'), ('67241568', '1000')])
@@ -98,22 +97,23 @@ class FilesManager:
             return []
         
         lista_articoli = []
-        for articolo in self.files[file_name].dict_articoli: #percorso che indica ArticlesManager del file da esportare.
-            for qty in self.files[file_name].dict_articoli[articolo]: #percorso che indica la lista delle qty di un articolo del file da esportare.
+        for articolo in self.files[file_name].dict_articoli: #Path indicating ArticlesManager of the file to export.
+            for qty in self.files[file_name].dict_articoli[articolo]: #Path indicating qty list of an article in the file to export.
                 lista_articoli.append((articolo,qty))
 
         return lista_articoli 
 
     def get_files(self) -> list:
-        """Ritorna la lista delle chiavi del dizionario contenuto in FilesManager.
+        """Return the list of the dictionary keys contained in FilesManager.
 
         Return:
-            (list): lista delle chiavi del dizionario 
+            (list): list of the dictionary keys. 
 
-        Esempio:
+        Example:
             >>> obj = FilesManager()
             >>> obj.get_files()
             ['inventario1', 'inventario2']
         """
 
         return list(self.files.keys())
+
