@@ -43,11 +43,11 @@ class FilesCommandPanel (tk.Frame):
 
         self.master = master_window
 
-        self._frame_font ='calibri 20'
+        self._frame_font = 'calibri 20'
         self.relief = 'solid'
         self.borderwidth = 1
-        self._padx = 20
-        self._pady = 70 
+        self._padx = 30
+        self._pady = 30 
 
         #Combobox border.
         self.style_combobox = ttk.Style()
@@ -60,7 +60,7 @@ class FilesCommandPanel (tk.Frame):
         self.columnconfigure(index = 0, weight = 1)
 
         self.label_file = tk.Label(master = self, text = 'File', font = self._frame_font)
-        self.label_file.grid(row = 0, column = 0, sticky = 's')
+        self.label_file.grid(row = 0, column = 0, sticky = 'nswe')
 
         self.files_choice = ttk.Combobox(master = self, style = 'Custom.TCombobox', values = [], font = self._frame_font)
         self.files_choice.grid(row = 1, column = 0) 
@@ -75,11 +75,11 @@ class FilesCommandPanel (tk.Frame):
     def create_file(self):
         """Create and add the file specified by the user in the Combobox."""       
         
-        file_to_add = self.scelta_files.get()
+        file_to_add = self.files_choice.get()
 
         if file_to_add != '' and file_to_add != ' ':
             ret = self.master.files_manager.insert_file(file_to_add)
-            self.scelta_files['values'] = self.master.files_manager.get_files() #visually refresh the Combobox.
+            self.files_choice['values'] = self.master.files_manager.get_files() #Visually refresh the Combobox.
 
             if ret == True:
                 messagebox.showinfo(title = 'Successo!', message = 'File creato con successo.')
@@ -89,11 +89,11 @@ class FilesCommandPanel (tk.Frame):
     def remove_file(self):
         """Delete a file specified by the user in the Combobox."""          
         
-        file_to_delete = self.scelta_files.get()
+        file_to_delete = self.files_choice.get()
 
         if file_to_delete != '' and file_to_delete != ' ':
             ret = self.master.files_manager.delete_file(file_to_delete)
-            self.scelta_files['values'] = self.master.files_manager.get_files() #visually refresh the Combobox.
+            self.files_choice['values'] = self.master.files_manager.get_files() #Visually refresh the Combobox.
 
             if ret == True:
                  messagebox.showinfo(title = 'Successo!', message = 'File rimosso con successo.')
@@ -113,10 +113,10 @@ class FilesCommandPanel (tk.Frame):
         """
 
         configuration_file = configparser.ConfigParser()
-        configuration_file.read('export.ini')
+        configuration_file.read('C:\\Users\\Lara\\source\\repos\\laramartino\\AppInventario\\AppInventario\\export.ini')
         dest_path = configuration_file['EXPORT']['destination'] 
 
-        file_to_export = self.scelta_files.get()
+        file_to_export = self.files_choice.get()
 
         if file_to_export not in self.master.files_manager.files:
             messagebox.showerror(title = 'Errore!', message = 'File inesistente.')

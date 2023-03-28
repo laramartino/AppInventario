@@ -22,6 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="articles_registry_panel.py" />
     <Compile Include="check_values.py" />
     <Compile Include="files_command_panel.py" />
     <Compile Include="files_manager.py" />

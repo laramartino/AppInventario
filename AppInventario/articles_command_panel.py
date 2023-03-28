@@ -2,7 +2,7 @@
 
 Dependencies:
     tkinter 
-    check_valori: the module containing the implementation of functions that check the values of article and quantity inserted by user. 
+    check_values: the module containing the implementation of functions that check the values of article, new article and quantity inserted by user. 
     video_detection: the module containing VideoDetection implementation.
 
 Example:
@@ -77,7 +77,7 @@ class ArticlesCommandPanel (tk.Frame):
     def insert_art_qty(self):
         """Add a new record article-quantity specified by the user to ArticlesManager."""
 
-        inserted_file = self.master.files_command_panel.scelta_files.get()  
+        inserted_file = self.master.files_command_panel.files_choice.get()  
         article = self.entry_art.get()
         qty = self.entry_new_qty.get()
 
@@ -99,7 +99,7 @@ class ArticlesCommandPanel (tk.Frame):
     def remove_qty(self):
         """Delete a quantity of an article specified by the user from ArticlesManager."""
         
-        inserted_file = self.master.files_command_panel.scelta_files.get()  
+        inserted_file = self.master.files_command_panel.files_choice.get()  
         article = self.entry_art.get()
         qty = self.entry_new_qty.get()
 
@@ -124,7 +124,7 @@ class ArticlesCommandPanel (tk.Frame):
     def modify_qty(self):
         """Modify a quantity of an article in ArticlesManager, the user specifies the article and the old quantity."""  
         
-        inserted_file = self.master.files_command_panel.scelta_files.get()  
+        inserted_file = self.master.files_command_panel.files_choice.get()  
         article = self.entry_art.get()
         new_qty = self.entry_new_qty.get()
         old_qty = self.entry_old_qty.get()

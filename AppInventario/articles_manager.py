@@ -128,7 +128,7 @@ class ArticlesManager:
             True            
         """
 
-        if not lista_val: #empty list.
+        if not lista_val: #Empty list.
             return False
 
         for record in lista_val:

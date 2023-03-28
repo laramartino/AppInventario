@@ -8,7 +8,8 @@ Dependencies:
     cv2 (OpenCV): open source computer vision and machine learning software library.
     pyzbar: library that reads one-dimensional barcodes using the zbar library.
     tkinter
-    check_valori: module containing the implementation of functions that check the values of article and quantity detected.
+    check_values: module containing the implementation of functions that check the values of article, new article and quantity detected.
+    PIL (Python Imaging Library): library for opening, manipulating and saving many different image file formats.
 """
 
 import cv2
@@ -16,6 +17,7 @@ from pyzbar import pyzbar
 from check_values import *
 import tkinter as tk
 from tkinter import messagebox 
+from PIL import ImageGrab
 
 class VideoDetection:
     """VideoDetection is a class with four methods related to barcode decoding 
@@ -38,12 +40,13 @@ class VideoDetection:
         self.entry_art = None 
         self.entry_qty = None
         self.popup = None
+        self.last_decoded_text = set()
 
     def show_popup(self, decoded_text_list: list):
         """When barcodes are detected, a tk.Toplevel with two entries and two buttons appears.
 
         Arg:
-            decoded_text (list): list containing article and quantity to insert.
+            decoded_text_list (list): list containing the article and the quantity to insert.
         """
 
         popup_window = True
@@ -56,25 +59,29 @@ class VideoDetection:
             art = decoded_text_list[1]
         else:
             messagebox.showerror(title = 'Errore!', message = 'Articolo e\o quantita\' non validi.')
-            popup_window = False #popup does not appear in the next if.
+            popup_window = False #Popup does not appear in the next if.
+
+        if set(decoded_text_list) == self.last_decoded_text:
+            messagebox.showwarning(title = 'Attenzione!', message = 'Record appena inserito.')
 
         if popup_window: #if popup_window == True
             self.popup = tk.Toplevel()
             self.popup.title('Codici rilevati')
+            self.popup.resizable(False, False) #Popup size cannot be changed by the user.
 
-            #display size.
+            #Display size.
             screen_width = self.popup.winfo_screenwidth()
             screen_height = self.popup.winfo_screenheight()
 
-            #popup size.
+            #Popup size.
             popup_width = 600
             popup_height = 300
 
-            #position (x,y) of the popup.
+            #Position (x,y) of the popup.
             x = int((screen_width / 2) - (popup_width / 2))
             y = int((screen_height / 2) - (popup_height / 2))
 
-            #popup in the centre of the display.
+            #Popup in the centre of the display.
             self.popup.geometry('{}x{}+{}+{}'.format(popup_width, popup_height, x, y))
 
             font = 'calibri 20'
@@ -103,12 +110,15 @@ class VideoDetection:
             button_new_detection = tk.Button(self.popup, text = 'Nuova Lettura', font = font, command = lambda : [self.popup.destroy(), self.video_detection()])
             button_new_detection.grid(row = 2, column = 1, sticky = 'nswe')   
 
+            #if set(decoded_text_list) == self.last_decoded_text:
+             #   messagebox.showinfo(title = 'Attenzione!', message = 'Record appena rilevato')
+                
             self.popup.mainloop()
 
     def insert_video_record(self):
         """Insert article and quantity detected in the selected file."""
 
-        selected_file = self.vd_master.master.files_command_panel.scelta_files.get()
+        selected_file = self.vd_master.master.files_command_panel.files_choice.get()
         if selected_file not in self.vd_master.master.files_manager.files:
             messagebox.showerror(title = 'Errore!', message = 'Seleziona un File esistente.')
             self.popup.destroy()
@@ -118,9 +128,10 @@ class VideoDetection:
             art = self.entry_art.get()
             qty = self.entry_qty.get()
 
-            #another check because the entries can be modified after detection.
+            #Another check because the entries can be modified after detection.
             if check_art(art) == True and check_qty(qty) == True:
                 self.vd_master.master.files_manager.files[selected_file].insert_record((art, qty))
+                self.last_decoded_text = {art, qty}
             else:
                 messagebox.showerror(title = 'Errore!', message = 'Articolo e\o quantita\' non validi.')
             
@@ -137,15 +148,22 @@ class VideoDetection:
             decoded_text_list (list): list containing the decoded texts of barcodes.
         """
 
-        camera = cv2.VideoCapture(1, cv2.CAP_DSHOW) #open the PC camera.
+        screen = ImageGrab.grab() #Capture the screen's contents as an image.
+        screen_width, screen_height = screen.size 
+
+        camera = cv2.VideoCapture(1, cv2.CAP_DSHOW) #Open the PC camera.
 
         #Loop over frames from the camera.
         while True:
-           _, frame = camera.read() #capture a frame from the camera.
+          
+           _, frame = camera.read() #Capture a frame from the camera.
 
-           gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #convert the frame to grayscale.
+           if screen_height > screen_width:
+              frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE) #Rotation of the PC camera if the tablet is used in portrait mode.
 
-           decoded_info = pyzbar.decode(gray_frame) #detect and decode barcodes in the grayscale frame.
+           gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #Convert the frame to grayscale.
+
+           decoded_info = pyzbar.decode(gray_frame) #Detect and decode barcodes in the grayscale frame.
 
            #For every decoded barcodes, put the rectangle in the frame.
            #Then add the decoded text in a set.
@@ -172,13 +190,13 @@ class VideoDetection:
                      lineType = cv2.LINE_AA,
                 )
 
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2) #draw the bounding box around the barcode on the frame.
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2) #Draw the bounding box around the barcode on the frame.
 
-           cv2.imshow('Frame', frame) #show the frame with the detected barcodes.
-            
+           cv2.imshow('Frame', frame) #Show the frame with the detected barcodes.
+           
            if len(decoded_text) == 2:
-               camera.release() #release the camera.
-               cv2.destroyAllWindows() #close the window.
+               camera.release() #Release the camera.
+               cv2.destroyAllWindows() #Close the window.
                decoded_text_list = list(decoded_text)
                self.show_popup(decoded_text_list)
 
