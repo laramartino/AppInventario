@@ -19,6 +19,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import openpyxl
 import configparser
+from check_values import show_keyboard 
 
 class FilesCommandPanel (tk.Frame): 
     """FilesCommandPanel is a frame containing a Combobox, a label and three buttons.
@@ -64,6 +65,7 @@ class FilesCommandPanel (tk.Frame):
 
         self.files_choice = ttk.Combobox(master = self, style = 'Custom.TCombobox', values = [], font = self._frame_font)
         self.files_choice.grid(row = 1, column = 0) 
+        self.files_choice.bind('<Button-1>', show_keyboard)
 
         self.button_add = tk.Button(master = self, text = 'Aggiungi File', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.create_file) 
         self.button_add.grid(row = 2, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)

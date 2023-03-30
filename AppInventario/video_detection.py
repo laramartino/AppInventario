@@ -67,22 +67,8 @@ class VideoDetection:
         if popup_window: #if popup_window == True
             self.popup = tk.Toplevel()
             self.popup.title('Codici rilevati')
+            self.popup.geometry('600x300+200+200')
             self.popup.resizable(False, False) #Popup size cannot be changed by the user.
-
-            #Display size.
-            screen_width = self.popup.winfo_screenwidth()
-            screen_height = self.popup.winfo_screenheight()
-
-            #Popup size.
-            popup_width = 600
-            popup_height = 300
-
-            #Position (x,y) of the popup.
-            x = int((screen_width / 2) - (popup_width / 2))
-            y = int((screen_height / 2) - (popup_height / 2))
-
-            #Popup in the centre of the display.
-            self.popup.geometry('{}x{}+{}+{}'.format(popup_width, popup_height, x, y))
 
             font = 'calibri 20'
             padx = 10
@@ -99,19 +85,18 @@ class VideoDetection:
             self.entry_art = tk.Entry(self.popup, font = font)
             self.entry_art.grid(row = 0, column = 1, sticky = 'nswe', padx = padx, pady = pady)
             self.entry_art.insert(0, art)
+            self.entry_art.bind('<Button-1>', show_keyboard)
             label_qty = tk.Label(self.popup, text = 'Qty: ', font = font)
             label_qty.grid(row = 1, column = 0, sticky = 'nswe')
             self.entry_qty = tk.Entry(self.popup, font = font)
             self.entry_qty.grid(row = 1, column = 1, sticky = 'nswe', padx = padx, pady = pady)
             self.entry_qty.insert(0, qty)
+            self.entry_qty.bind('<Button-1>', show_keyboard)
 
             button_insert = tk.Button(self.popup, text = 'Aggiungi', font = font, command = self.insert_video_record)
             button_insert.grid(row = 2, column = 0, sticky = 'nswe')
             button_new_detection = tk.Button(self.popup, text = 'Nuova Lettura', font = font, command = lambda : [self.popup.destroy(), self.video_detection()])
             button_new_detection.grid(row = 2, column = 1, sticky = 'nswe')   
-
-            #if set(decoded_text_list) == self.last_decoded_text:
-             #   messagebox.showinfo(title = 'Attenzione!', message = 'Record appena rilevato')
                 
             self.popup.mainloop()
 

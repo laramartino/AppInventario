@@ -1,10 +1,19 @@
 """This module contains the implementation of functions that check the values of article, new article and quantity inserted by user.
 
+There is also the function that shows touch keyboard.
+
 Dependencies:
     pandas: library for manipulating data in Excel files.   
+    os: module providing of using operating system dependent functionality.
 """
 
 import pandas as pd
+import os
+
+def show_keyboard(event):
+    """Show touch keyboard."""
+
+    os.system('C:\\PROGRA~1\\COMMON~1\\MICROS~1\\ink\\TabTip.exe')
 
 def check_art(art: str) -> bool:
     """Check the value of the article inserted by user.

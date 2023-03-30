@@ -63,8 +63,10 @@ class ArticlesCommandPanel (tk.Frame):
         self.button_detection.grid(row = 0, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
         self.entry_art = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
         self.entry_art.grid(row = 1, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.entry_art.bind('<Button-1>', show_keyboard)
         self.entry_new_qty = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
         self.entry_new_qty.grid(row = 2, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.entry_new_qty.bind('<Button-1>', show_keyboard)
         self.button_insert = tk.Button(master = self, text = 'Inserisci', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.insert_art_qty) 
         self.button_insert.grid(row = 3, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
         self.button_delete = tk.Button(master = self, text = 'Cancella', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.remove_qty) 
@@ -73,6 +75,7 @@ class ArticlesCommandPanel (tk.Frame):
         self.button_modify.grid(row = 5, column = 0, sticky = 'nswe', columnspan = 2, padx = self._padx, pady = self._pady)
         self.entry_old_qty = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
         self.entry_old_qty.grid(row = 6, column = 1, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.entry_old_qty.bind('<Button-1>', show_keyboard)
 
     def insert_art_qty(self):
         """Add a new record article-quantity specified by the user to ArticlesManager."""

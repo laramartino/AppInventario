@@ -17,7 +17,7 @@ Example:
 
 import tkinter as tk 
 from tkinter import messagebox
-from check_values import check_new_art
+from check_values import *
 import pandas as pd
 import openpyxl 
 
@@ -51,6 +51,7 @@ class ArticlesRegistryPanel (tk.Frame):
 
         self.entry_new_art = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
         self.entry_new_art.grid(row = 0, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.entry_new_art.bind('<Button-1>', show_keyboard)
         self.button_add = tk.Button(master = self, text = 'Aggiungi Articolo\nin Anagrafica', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.add_article) 
         self.button_add.grid(row = 1, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
 
