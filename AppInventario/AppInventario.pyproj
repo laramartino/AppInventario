@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9f07e8c9-1f39-4600-9419-7880a3a6677d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>graphical_interface.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -29,8 +30,6 @@
     <Compile Include="articles_manager.py" />
     <Compile Include="articles_command_panel.py" />
     <Compile Include="graphical_interface.py" />
-    <Compile Include="save_panel.py" />
-    <Compile Include="TEST.py" />
     <Compile Include="video_detection.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

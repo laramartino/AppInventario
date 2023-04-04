@@ -4,33 +4,25 @@ There is also the function that shows touch keyboard.
 
 Dependencies:
     pandas: library for manipulating data in Excel files.   
-    os: module providing of using operating system dependent functionality.
+    subprocess: module that allows to generate new processes, connect to their input/output/error tubes and get their return codes.
 """
 
 import pandas as pd
-import os
+import subprocess
 
 def show_keyboard(event):
     """Show touch keyboard."""
 
-    os.system('C:\\PROGRA~1\\COMMON~1\\MICROS~1\\ink\\TabTip.exe')
+    subprocess.Popen(['C:\\PROGRA~1\\COMMON~1\\MICROS~1\\ink\\TabTip.exe'], shell = True)
 
 def check_art(art: str) -> bool:
     """Check the value of the article inserted by user.
-
-    Accepted letters are only: 
-    Z (zinc-coated article)
-    K (SKF customer)
-    H (Parker customer) 
-    B (tempered processing) 
-    S (article without hole)
-    N (article without logo)
 
     Arg:
         art (str): article string.
 
     Return:
-        False if the string length is not 8, if there are letters other than those mentioned above or if the article is not in MP registry,
+        False if the string length is not 8, if there are no capital letters and/or numbers or if the article is not in MP registry,
         otherwise True.
         
     Example:
@@ -44,10 +36,10 @@ def check_art(art: str) -> bool:
         return False
     
     for a in art:
-        if a not in 'ZKHBSN012345679': 
+        if a not in 'QWERTYUIOPASDFGHJKLZXCVBNM0123456789': 
             return False
 
-    excel_file = pd.read_excel('C:\\Users\\Lara\\source\\repos\\laramartino\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx') #Read file Excel.
+    excel_file = pd.read_excel('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx') #Read file Excel.
 
     series_articles_mp = pd.Series(excel_file['ARTICOLO']) #One-dimensional ndarray with row index.
     
@@ -83,37 +75,29 @@ def check_qty(qty: str) -> bool:
 def check_new_art(new_art: str) -> bool:
     """Check the value of the new article inserted by user.
 
-    Accepted letters are only: 
-    Z (zinc-coated article)
-    K (SKF customer)
-    H (Parker customer) 
-    B (tempered processing) 
-    S (article without hole)
-    N (article without logo)
-
     Arg:
         art (str): new article string.
 
     Return:
-        False if the string length is not 8, if there are letters other than those mentioned above or if the article is already in the MP registry,
+        False if the string length is not 8, if there are no capital letters and/or numbers or if the article is already in the MP registry,
         otherwise True.
         
     Example:
         from check_values import check_new_art
 
-        print(check_art('Z9035105'))   
-        print(check_art('01111111'))
+        print(check_new_art('Z9035105'))   
+        print(check_new_art('01111111'))
     """
 
     if len(new_art) != 8:
         return False
     
     for a in new_art:
-        if a not in 'ZKHBSN0123456789':
+        if a not in 'QWERTYUIOPASDFGHJKLZXCVBNM0123456789':
             return False
 
     #Read Excel file and get the 'ARTICOLO' column as a list of str.
-    articles_mp_list = pd.read_excel('C:\\Users\\Lara\\source\\repos\\laramartino\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx')['ARTICOLO'].tolist() 
+    articles_mp_list = pd.read_excel('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx')['ARTICOLO'].tolist() 
 
     if new_art in articles_mp_list:
         return False
