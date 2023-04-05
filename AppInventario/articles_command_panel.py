@@ -85,7 +85,7 @@ class ArticlesCommandPanel (tk.Frame):
         qty = self.entry_new_qty.get()
 
         if inserted_file not in self.master.files_manager.files:
-            messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
+            messagebox.showerror(title = 'Errore!', message = 'Seleziona un file esistente.')
             return 
 
         if check_art(article) == False:
@@ -107,7 +107,7 @@ class ArticlesCommandPanel (tk.Frame):
         qty = self.entry_new_qty.get()
 
         if inserted_file not in self.master.files_manager.files:
-            messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
+            messagebox.showerror(title = 'Errore!', message = 'Seleziona un File esistente.')
             return 
 
         if check_art(article) == False:
@@ -117,13 +117,18 @@ class ArticlesCommandPanel (tk.Frame):
         if check_qty(qty) == False:
             messagebox.showerror(title = 'Errore!', message = 'Quantita\' non valida.')
             return
-        
-        ret = self.master.files_manager.files[inserted_file].delete_qty((article, qty))
-        if ret == True:
-            messagebox.showinfo(title = 'Successo!', message = 'Quantita\' rimossa con successo per l\'articolo ' + article)
-        else:
-            messagebox.showerror(title = 'Errore!', message = 'Record invalido.')
 
+        if article not in self.master.files_manager.files[inserted_file].dict_articoli:
+            messagebox.showerror(title = 'Errore!', message = 'Articolo non presente nel file.') 
+            return
+
+        if qty not in self.master.files_manager.files[inserted_file].dict_articoli[article]:
+            messagebox.showerror(title = 'Errore!', message = 'Quantita\' non presente per l\'articolo ' + article) 
+            return
+        
+        self.master.files_manager.files[inserted_file].delete_qty((article, qty))
+        messagebox.showinfo(title = 'Successo!', message = 'Quantita\' rimossa con successo per l\'articolo ' + article)
+        
     def modify_qty(self):
         """Modify a quantity of an article in ArticlesManager, the user specifies the article and the old quantity."""  
         
@@ -133,7 +138,7 @@ class ArticlesCommandPanel (tk.Frame):
         old_qty = self.entry_old_qty.get()
 
         if inserted_file not in self.master.files_manager.files:
-            messagebox.showerror(title = 'Errore!', message = 'File non esistente.')
+            messagebox.showerror(title = 'Errore!', message = 'Seleziona un File esistente.')
             return 
 
         if check_art(article) == False:
@@ -144,19 +149,21 @@ class ArticlesCommandPanel (tk.Frame):
             messagebox.showerror(title = 'Errore!', message = 'Quantita\' non valida.')
             return
 
-        if old_qty not in self.master.files_manager.files[inserted_file].dict_articoli[article]:
-            messagebox.showerror(title = 'Errore!', message = 'Quantita\' non presente per l\'articolo ' + article) 
-            return
-
         if check_qty(old_qty) == False:
             messagebox.showerror(title = 'Errore!', message = 'Quantita\' da aggiornare non valida.')
             return
+
+        if article not in self.master.files_manager.files[inserted_file].dict_articoli:
+            messagebox.showerror(title = 'Errore!', message = 'Articolo non presente nel file.') 
+            return
+
+        if old_qty not in self.master.files_manager.files[inserted_file].dict_articoli[article]:
+            messagebox.showerror(title = 'Errore!', message = 'Quantita\' non presente per l\'articolo ' + article) 
+            return
         
-        ret = self.master.files_manager.files[inserted_file].modify_record((article, old_qty, new_qty))
-        if ret == True:
-            messagebox.showinfo(title = 'Successo!', message = 'Quantita\' modificata con successo per l\'articolo ' + article)
-        else:
-            messagebox.showerror(title = 'Errore!', message = 'Record invalido.')
+        self.master.files_manager.files[inserted_file].modify_record((article, old_qty, new_qty))
+        messagebox.showinfo(title = 'Successo!', message = 'Quantita\' modificata con successo per l\'articolo ' + article)
+
 
 
 
