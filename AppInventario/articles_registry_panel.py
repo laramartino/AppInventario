@@ -35,7 +35,7 @@ class ArticlesRegistryPanel (tk.Frame):
             master_window (tk.Tk): master application.
         """
 
-        tk.Frame.__init__(self, master = master_window, highlightbackground = 'black', highlightthickness = 2) 
+        tk.Frame.__init__(self, master=master_window, highlightbackground='black', highlightthickness=2) 
 
         self.master = master_window
 
@@ -45,15 +45,15 @@ class ArticlesRegistryPanel (tk.Frame):
         self._padx = 35
         self._pady = 30 
         
-        self.rowconfigure(index = 0, weight = 1)
-        self.rowconfigure(index = 1, weight = 1)
-        self.columnconfigure(index = 0, weight = 1)
+        self.rowconfigure(index=0, weight=1)
+        self.rowconfigure(index=1, weight=1)
+        self.columnconfigure(index=0, weight=1)
 
-        self.entry_new_art = tk.Entry(master = self, relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font)
-        self.entry_new_art.grid(row = 0, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.entry_new_art = tk.Entry(master=self, relief=self.relief, borderwidth=self.borderwidth, font=self._frame_font)
+        self.entry_new_art.grid(row=0, column=0, sticky='nswe', padx=self._padx, pady=self._pady)
         self.entry_new_art.bind('<Button-1>', show_keyboard)
-        self.button_add = tk.Button(master = self, text = 'Aggiungi Articolo\nin Anagrafica', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.add_article) 
-        self.button_add.grid(row = 1, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_add = tk.Button(master=self, text='Aggiungi Articolo\nin Anagrafica', relief=self.relief, borderwidth=self.borderwidth, font=self._frame_font, command=self.add_article) 
+        self.button_add.grid(row=1, column=0, sticky='nswe', padx=self._padx, pady=self._pady)
 
     def add_article(self):
         """Add the article specified by the user in the entry to the MP registry (Excel file)."""       
@@ -77,10 +77,10 @@ class ArticlesRegistryPanel (tk.Frame):
                 file_worksheet.append([art])
             file_workbook.save('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx') 
             
-            messagebox.showinfo(title = 'Successo!', message = 'Articolo aggiunto correttamente.')
+            messagebox.showinfo(title='Successo!', message='Articolo aggiunto correttamente.')
         
         else:
-            messagebox.showerror(title = 'Errore!', message = 'Articolo gia\' presente o invalido.')
+            messagebox.showerror(title='Errore!', message='Articolo gia\' presente o invalido.')
 
 
 

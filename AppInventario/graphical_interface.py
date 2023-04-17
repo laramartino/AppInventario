@@ -42,19 +42,19 @@ class App(tk.Tk):
         self.geometry('800x770+0+0')  # 0+0 the App window appears at the top left of the display.
         self.resizable(False, False)  # Popup size cannot be changed by the user.
 
-        self.rowconfigure(index = 0, weight = 1)
-        self.rowconfigure(index = 1, weight = 1)
-        self.columnconfigure(index = 0, weight = 1)
-        self.columnconfigure(index = 1, weight = 1)
+        self.rowconfigure(index=0, weight=1)
+        self.rowconfigure(index=1, weight=1)
+        self.columnconfigure(index=0, weight=1)
+        self.columnconfigure(index=1, weight=1)
 
-        self.articles_command_panel = ArticlesCommandPanel(master_window = self)
-        self.articles_command_panel.grid(row = 0, column = 0, rowspan = 2, sticky = 'nswe')
+        self.articles_command_panel = ArticlesCommandPanel(master_window=self)
+        self.articles_command_panel.grid(row=0, column=0, rowspan=2, sticky='nswe')
 
-        self.files_command_panel = FilesCommandPanel(master_window = self) 
-        self.files_command_panel.grid(row = 0, column = 1, sticky = 'nswe') 
+        self.files_command_panel = FilesCommandPanel(master_window=self) 
+        self.files_command_panel.grid(row=0, column=1, sticky='nswe') 
 
-        self.articles_registry_panel = ArticlesRegistryPanel(master_window = self)
-        self.articles_registry_panel.grid(row = 1, column = 1, sticky = 'nswe')
+        self.articles_registry_panel = ArticlesRegistryPanel(master_window=self)
+        self.articles_registry_panel.grid(row=1, column=1, sticky='nswe')
 
         # Load of the changes made since the last data save, using the pickle binary file.
         saved_data = open('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\salvataggio_progressi\\dati_salvati.pkl', 'rb') 

@@ -57,11 +57,11 @@ class VideoDetection:
             qty = decoded_text_list[0]
             art = decoded_text_list[1]
         else:
-            messagebox.showerror(title = 'Errore!', message = 'Articolo e\o quantita\' non validi.')
+            messagebox.showerror(title='Errore!', message='Articolo e\o quantita\' non validi.')
             return
 
         if set(decoded_text_list) == self.last_decoded_text:
-            messagebox.showwarning(title = 'Attenzione!', message = 'Record appena inserito.')
+            messagebox.showwarning(title='Attenzione!', message='Record appena inserito.')
 
         self.popup = tk.Toplevel()
         self.popup.title('Codici rilevati')
@@ -72,29 +72,29 @@ class VideoDetection:
         padx = 10
         pady = 30
 
-        self.popup.rowconfigure(index = 0, weight = 1)
-        self.popup.rowconfigure(index = 1, weight = 1)
-        self.popup.rowconfigure(index = 2, weight = 1)
-        self.popup.columnconfigure(index = 0, weight = 1)
-        self.popup.columnconfigure(index = 1, weight = 1)
+        self.popup.rowconfigure(index=0, weight=1)
+        self.popup.rowconfigure(index=1, weight=1)
+        self.popup.rowconfigure(index=2, weight=1)
+        self.popup.columnconfigure(index=0, weight=1)
+        self.popup.columnconfigure(index=1, weight=1)
 
-        label_art = tk.Label(self.popup, text = 'Articolo: ', font = font)
-        label_art.grid(row = 0, column = 0, sticky = 'nswe')
-        self.entry_art = tk.Entry(self.popup, font = font)
-        self.entry_art.grid(row = 0, column = 1, sticky = 'nswe', padx = padx, pady = pady)
+        label_art = tk.Label(self.popup, text='Articolo: ', font=font)
+        label_art.grid(row=0, column=0, sticky='nswe')
+        self.entry_art = tk.Entry(self.popup, font=font)
+        self.entry_art.grid(row=0, column=1, sticky='nswe', padx=padx, pady=pady)
         self.entry_art.insert(0, art)
         self.entry_art.bind('<Button-1>', show_keyboard)
-        label_qty = tk.Label(self.popup, text = 'Qty: ', font = font)
-        label_qty.grid(row = 1, column = 0, sticky = 'nswe')
-        self.entry_qty = tk.Entry(self.popup, font = font)
-        self.entry_qty.grid(row = 1, column = 1, sticky = 'nswe', padx = padx, pady = pady)
+        label_qty = tk.Label(self.popup, text='Qty: ', font=font)
+        label_qty.grid(row=1, column=0, sticky='nswe')
+        self.entry_qty = tk.Entry(self.popup, font=font)
+        self.entry_qty.grid(row=1, column=1, sticky='nswe', padx=padx, pady=pady)
         self.entry_qty.insert(0, qty)
         self.entry_qty.bind('<Button-1>', show_keyboard)
 
-        button_insert = tk.Button(self.popup, text = 'Aggiungi', font = font, command = self.insert_video_record)
-        button_insert.grid(row = 2, column = 0, sticky = 'nswe')
-        button_new_detection = tk.Button(self.popup, text = 'Nuova Lettura', font = font, command = lambda : [self.popup.destroy(), self.video_detection()])
-        button_new_detection.grid(row = 2, column = 1, sticky = 'nswe')   
+        button_insert = tk.Button(self.popup, text='Aggiungi', font=font, command=self.insert_video_record)
+        button_insert.grid(row=2, column=0, sticky='nswe')
+        button_new_detection = tk.Button(self.popup, text='Nuova Lettura', font=font, command=lambda: [self.popup.destroy(), self.video_detection()])
+        button_new_detection.grid(row=2, column=1, sticky='nswe')   
                 
         self.popup.mainloop()
 
@@ -103,7 +103,7 @@ class VideoDetection:
 
         selected_file = self.vd_master.master.files_command_panel.files_choice.get()
         if selected_file not in self.vd_master.master.files_manager.files:
-            messagebox.showerror(title = 'Errore!', message = 'Seleziona un File esistente.')
+            messagebox.showerror(title='Errore!', message='Seleziona un File esistente.')
             self.popup.destroy()
         else:
             self.vd_master.master.files_manager.insert_file(selected_file)
@@ -121,7 +121,7 @@ class VideoDetection:
             self.popup.destroy()
             self.video_detection()
 
-    def video_detection(self, debug: int = 0) -> list:
+    def video_detection(self, debug: int=0) -> list:
         """Detect barcodes from the PC camera and returns their decoded texts.
 
         Arg:
@@ -161,16 +161,16 @@ class VideoDetection:
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 font_scale = 0.5
                 thickness = 1
-                text_size, _ = cv2.getTextSize(text = data, fontFace = font, fontScale = font_scale, thickness = thickness)
+                text_size, _ = cv2.getTextSize(text=data, fontFace=font, fontScale=font_scale, thickness=thickness)
                 cv2.putText(
-                     img = frame, 
-                     text = data, 
-                     org = (x, y - text_size[1]), 
-                     fontFace = font, 
-                     fontScale = font_scale, 
-                     color = (0, 0, 255), 
-                     thickness = thickness,
-                     lineType = cv2.LINE_AA,
+                     img=frame, 
+                     text=data, 
+                     org=(x, y - text_size[1]), 
+                     fontFace=font, 
+                     fontScale=font_scale, 
+                     color=(0, 0, 255), 
+                     thickness=thickness,
+                     lineType=cv2.LINE_AA,
                 )
 
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)  # Draw the bounding box around the barcode on the frame.

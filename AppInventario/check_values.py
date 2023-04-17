@@ -13,7 +13,7 @@ import subprocess
 def show_keyboard(event):
     """Show touch keyboard."""
 
-    subprocess.Popen(['C:\\PROGRA~1\\COMMON~1\\MICROS~1\\ink\\TabTip.exe'], shell = True)
+    subprocess.Popen(['C:\\PROGRA~1\\COMMON~1\\MICROS~1\\ink\\TabTip.exe'], shell=True)
 
 def check_art(art: str) -> bool:
     """Check the value of the article inserted by user.
@@ -43,7 +43,7 @@ def check_art(art: str) -> bool:
 
     series_articles_mp = pd.Series(excel_file['ARTICOLO'])  # One-dimensional ndarray with row index.
     
-    articles_mp = series_articles_mp.to_string(index = False)  # Represent the data of the Series as str.
+    articles_mp = series_articles_mp.to_string(index=False)  # Represent the data of the Series as str.
 
     if art not in articles_mp:
         return False
@@ -68,7 +68,7 @@ def check_qty(qty: str) -> bool:
     if qty == '':
        return False
     for q in qty:
-        if not 48 <= ord(q) <= 57: #48 = '0', 57 = '9'.
+        if not 48 <= ord(q) <= 57:  # 48 = '0', 57 = '9'.
             return False
     return True
 

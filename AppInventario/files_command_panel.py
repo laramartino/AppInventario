@@ -40,7 +40,7 @@ class FilesCommandPanel (tk.Frame):
             master_window (tk.Tk): master application.
         """
 
-        tk.Frame.__init__(self, master = master_window, highlightbackground = 'black', highlightthickness = 2) 
+        tk.Frame.__init__(self, master=master_window, highlightbackground='black', highlightthickness=2) 
 
         self.master = master_window
 
@@ -53,26 +53,26 @@ class FilesCommandPanel (tk.Frame):
         # Combobox border.
         self.style_combobox = ttk.Style()
         self.style_combobox.theme_use('default')
-        self.style_combobox.configure('Custom.TCombobox', relief = 'solid', borderwidth = 3)
+        self.style_combobox.configure('Custom.TCombobox', relief='solid', borderwidth=3)
 
         for i in range(5):
-            self.rowconfigure(index = i, weight = 1)
+            self.rowconfigure(index=i, weight=1)
              
-        self.columnconfigure(index = 0, weight = 1)
+        self.columnconfigure(index=0, weight=1)
 
-        self.label_file = tk.Label(master = self, text = 'File', font = self._frame_font)
-        self.label_file.grid(row = 0, column = 0, sticky = 'nswe')
+        self.label_file = tk.Label(master=self, text='File', font=self._frame_font)
+        self.label_file.grid(row=0, column=0, sticky='nswe')
 
-        self.files_choice = ttk.Combobox(master = self, style = 'Custom.TCombobox', values = [], font = self._frame_font)
-        self.files_choice.grid(row = 1, column = 0) 
+        self.files_choice = ttk.Combobox(master=self, style='Custom.TCombobox', values=[], font=self._frame_font)
+        self.files_choice.grid(row=1, column=0) 
         self.files_choice.bind('<Button-1>', show_keyboard)
 
-        self.button_add = tk.Button(master = self, text = 'Aggiungi File', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.create_file) 
-        self.button_add.grid(row = 2, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.button_delete = tk.Button(master = self, text = 'Rimuovi File', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.remove_file) 
-        self.button_delete.grid(row = 3, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
-        self.button_export = tk.Button(master = self, text = 'Esporta File', relief = self.relief, borderwidth = self.borderwidth, font = self._frame_font, command = self.export_file) 
-        self.button_export.grid(row = 4, column = 0, sticky = 'nswe', padx = self._padx, pady = self._pady)
+        self.button_add = tk.Button(master=self, text='Aggiungi File', relief=self.relief, borderwidth=self.borderwidth, font=self._frame_font, command=self.create_file) 
+        self.button_add.grid(row=2, column=0, sticky='nswe', padx=self._padx, pady=self._pady)
+        self.button_delete = tk.Button(master=self, text='Rimuovi File', relief=self.relief, borderwidth=self.borderwidth, font=self._frame_font, command=self.remove_file) 
+        self.button_delete.grid(row=3, column=0, sticky='nswe', padx=self._padx, pady=self._pady)
+        self.button_export = tk.Button(master=self, text='Esporta File', relief=self.relief, borderwidth=self.borderwidth, font=self._frame_font, command=self.export_file) 
+        self.button_export.grid(row=4, column=0, sticky='nswe', padx=self._padx, pady=self._pady)
 
     def create_file(self):
         """Create and add the file specified by the user in the Combobox."""       
@@ -84,9 +84,9 @@ class FilesCommandPanel (tk.Frame):
             self.files_choice['values'] = self.master.files_manager.get_files()  # Visually refresh the Combobox.
 
             if ret == True:
-                messagebox.showinfo(title = 'Successo!', message = 'File creato con successo.')
+                messagebox.showinfo(title='Successo!', message='File creato con successo.')
             else:
-                messagebox.showerror(title = 'Errore!', message = 'File gia\' esistente.')
+                messagebox.showerror(title='Errore!', message='File gia\' esistente.')
 
     def remove_file(self):
         """Delete a file specified by the user in the Combobox."""          
@@ -98,9 +98,9 @@ class FilesCommandPanel (tk.Frame):
             self.files_choice['values'] = self.master.files_manager.get_files()  # Visually refresh the Combobox.
 
             if ret == True:
-                 messagebox.showinfo(title = 'Successo!', message = 'File rimosso con successo.')
+                 messagebox.showinfo(title='Successo!', message='File rimosso con successo.')
             else:
-                 messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
+                 messagebox.showerror(title='Errore!', message='File inesistente.')
 
     def export_file(self):
         """Export a file specified by the user in the Combobox to an Excel file.
@@ -121,7 +121,7 @@ class FilesCommandPanel (tk.Frame):
         file_to_export = self.files_choice.get()
 
         if file_to_export not in self.master.files_manager.files:
-            messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
+            messagebox.showerror(title='Errore!', message='File inesistente.')
 
         else:
             sorted_art = sorted(self.master.files_manager.files[file_to_export].dict_articoli.keys())  # The articles are sorted in alphabetical order.
@@ -146,7 +146,7 @@ class FilesCommandPanel (tk.Frame):
 
             file_workbook.save(dest_path + file_to_export + '.xlsx')  # Save the Excel file in the specified path. 
         
-            messagebox.showinfo(title = 'Successo!', message = 'File esportato con successo.')
+            messagebox.showinfo(title='Successo!', message='File esportato con successo.')
 
 
 
