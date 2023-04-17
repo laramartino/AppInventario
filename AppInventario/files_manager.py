@@ -97,8 +97,8 @@ class FilesManager:
             return []
         
         lista_articoli = []
-        for articolo in self.files[file_name].dict_articoli: #Path indicating ArticlesManager of the file to export.
-            for qty in self.files[file_name].dict_articoli[articolo]: #Path indicating qty list of an article in the file to export.
+        for articolo in self.files[file_name].dict_articoli:  # Path indicating ArticlesManager of the file to export.
+            for qty in self.files[file_name].dict_articoli[articolo]:  # Path indicating qty list of an article in the file to export.
                 lista_articoli.append((articolo,qty))
 
         return lista_articoli 

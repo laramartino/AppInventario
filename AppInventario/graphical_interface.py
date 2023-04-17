@@ -39,8 +39,8 @@ class App(tk.Tk):
         self.files_manager = FilesManager()
 
         self.title('Barcode Detector') 
-        self.geometry('800x770+0+0') #0+0 the App window appears at the top left of the display.
-        self.resizable(False, False) #Popup size cannot be changed by the user.
+        self.geometry('800x770+0+0')  # 0+0 the App window appears at the top left of the display.
+        self.resizable(False, False)  # Popup size cannot be changed by the user.
 
         self.rowconfigure(index = 0, weight = 1)
         self.rowconfigure(index = 1, weight = 1)
@@ -56,7 +56,7 @@ class App(tk.Tk):
         self.articles_registry_panel = ArticlesRegistryPanel(master_window = self)
         self.articles_registry_panel.grid(row = 1, column = 1, sticky = 'nswe')
 
-        #Load of the changes made since the last data save, using the pickle binary file.
+        # Load of the changes made since the last data save, using the pickle binary file.
         saved_data = open('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\salvataggio_progressi\\dati_salvati.pkl', 'rb') 
         loading_data = pickle.load(saved_data)
         self.files_manager.files.update(loading_data)
@@ -64,7 +64,7 @@ class App(tk.Tk):
 
         self.files_command_panel.files_choice['values'] = [inventario for inventario in loading_data.keys()] #visually refresh the Combobox. 
 
-        self.protocol("WM_DELETE_WINDOW", self.save_on_close) #When user clicks on the 'X' at the top right of the interface, the save_on_close() function is called.
+        self.protocol("WM_DELETE_WINDOW", self.save_on_close)  # When user clicks on the 'X' at the top right of the interface, the save_on_close() function is called.
 
     def save_on_close(self):
         """Save the changes made since opening the application.
@@ -78,6 +78,7 @@ class App(tk.Tk):
         pickle.dump(self.files_manager.files, saved_data)
         saved_data.close()
         self.destroy() 
+
 
 if __name__ == '__main__':
     obj = App()

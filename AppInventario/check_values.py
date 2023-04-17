@@ -39,11 +39,11 @@ def check_art(art: str) -> bool:
         if a not in 'QWERTYUIOPASDFGHJKLZXCVBNM0123456789': 
             return False
 
-    excel_file = pd.read_excel('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx') #Read file Excel.
+    excel_file = pd.read_excel('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx')  # Read file Excel.
 
-    series_articles_mp = pd.Series(excel_file['ARTICOLO']) #One-dimensional ndarray with row index.
+    series_articles_mp = pd.Series(excel_file['ARTICOLO'])  # One-dimensional ndarray with row index.
     
-    articles_mp = series_articles_mp.to_string(index = False) #Represent the data of the Series as str.
+    articles_mp = series_articles_mp.to_string(index = False)  # Represent the data of the Series as str.
 
     if art not in articles_mp:
         return False
@@ -96,7 +96,7 @@ def check_new_art(new_art: str) -> bool:
         if a not in 'QWERTYUIOPASDFGHJKLZXCVBNM0123456789':
             return False
 
-    #Read Excel file and get the 'ARTICOLO' column as a list of str.
+    # Read Excel file and get the 'ARTICOLO' column as a list of str.
     articles_mp_list = pd.read_excel('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx')['ARTICOLO'].tolist() 
 
     if new_art in articles_mp_list:

@@ -63,13 +63,13 @@ class ArticlesRegistryPanel (tk.Frame):
 
         if ret == True:
 
-            #Read Excel file and get the 'ARTICOLO' column as a list of str.
+            # Read Excel file and get the 'ARTICOLO' column as a list of str.
             articles_mp_list = pd.read_excel('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx')['ARTICOLO'].tolist() 
             articles_mp_list.append(article_to_add)
             articles_mp_list.sort()
 
-            file_workbook = openpyxl.Workbook() #A Workbook is created to allow writing to an Excel file.
-            file_worksheet = file_workbook.active #Select the active worksheet.
+            file_workbook = openpyxl.Workbook() # A Workbook is created to allow writing to an Excel file.
+            file_worksheet = file_workbook.active # Select the active worksheet.
 
             header = ['ARTICOLO']
             file_worksheet.append(header)

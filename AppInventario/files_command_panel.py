@@ -50,7 +50,7 @@ class FilesCommandPanel (tk.Frame):
         self._padx = 30
         self._pady = 30 
 
-        #Combobox border.
+        # Combobox border.
         self.style_combobox = ttk.Style()
         self.style_combobox.theme_use('default')
         self.style_combobox.configure('Custom.TCombobox', relief = 'solid', borderwidth = 3)
@@ -81,7 +81,7 @@ class FilesCommandPanel (tk.Frame):
 
         if file_to_add != '' and file_to_add != ' ':
             ret = self.master.files_manager.insert_file(file_to_add)
-            self.files_choice['values'] = self.master.files_manager.get_files() #Visually refresh the Combobox.
+            self.files_choice['values'] = self.master.files_manager.get_files()  # Visually refresh the Combobox.
 
             if ret == True:
                 messagebox.showinfo(title = 'Successo!', message = 'File creato con successo.')
@@ -95,7 +95,7 @@ class FilesCommandPanel (tk.Frame):
 
         if file_to_delete != '' and file_to_delete != ' ':
             ret = self.master.files_manager.delete_file(file_to_delete)
-            self.files_choice['values'] = self.master.files_manager.get_files() #Visually refresh the Combobox.
+            self.files_choice['values'] = self.master.files_manager.get_files()  # Visually refresh the Combobox.
 
             if ret == True:
                  messagebox.showinfo(title = 'Successo!', message = 'File rimosso con successo.')
@@ -124,17 +124,17 @@ class FilesCommandPanel (tk.Frame):
             messagebox.showerror(title = 'Errore!', message = 'File inesistente.')
 
         else:
-            sorted_art = sorted(self.master.files_manager.files[file_to_export].dict_articoli.keys()) #The articles are sorted in alphabetical order.
+            sorted_art = sorted(self.master.files_manager.files[file_to_export].dict_articoli.keys())  # The articles are sorted in alphabetical order.
 
-            sorted_file = {} #New dictionary where sorted articles are inserted.
+            sorted_file = {}  # New dictionary where sorted articles are inserted.
             for art in sorted_art:
-                sorted_file[art] = self.master.files_manager.files[file_to_export].dict_articoli[art] #Path indicating the qty list of art in the file_to_export.
+                sorted_file[art] = self.master.files_manager.files[file_to_export].dict_articoli[art]  # Path indicating the qty list of art in the file_to_export.
 
-            sorted_file = {art: sorted(map(int,qty)) for art, qty in sorted_file.items()} #Qty are also sorted in ascending order by map() function for conversion to int.
+            sorted_file = {art: sorted(map(int,qty)) for art, qty in sorted_file.items()}  # Qty are also sorted in ascending order by map() function for conversion to int.
 
-            file_workbook = openpyxl.Workbook() #A Workbook is created to allow writing to an Excel file.
+            file_workbook = openpyxl.Workbook()  # A Workbook is created to allow writing to an Excel file.
         
-            file_worksheet = file_workbook.active #Select the active worksheet.
+            file_worksheet = file_workbook.active  # Select the active worksheet.
 
             header = ['Articolo', 'Quantita\'']
             file_worksheet.append(header)
@@ -144,7 +144,7 @@ class FilesCommandPanel (tk.Frame):
                     record = [art, qty]
                     file_worksheet.append(record)
 
-            file_workbook.save(dest_path + file_to_export + '.xlsx') #Save the Excel file in the specified path. 
+            file_workbook.save(dest_path + file_to_export + '.xlsx')  # Save the Excel file in the specified path. 
         
             messagebox.showinfo(title = 'Successo!', message = 'File esportato con successo.')
 
