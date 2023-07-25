@@ -115,7 +115,7 @@ class FilesCommandPanel (tk.Frame):
         """
 
         configuration_file = configparser.ConfigParser()
-        configuration_file.read('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\export.ini')
+        configuration_file.read('C:\\Users\\lara_\\OneDrive\\Desktop\\AppInventario\\AppInventario\\export.ini')
         dest_path = configuration_file['EXPORT']['destination'] 
 
         file_to_export = self.files_choice.get()

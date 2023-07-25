@@ -28,7 +28,7 @@ class App(tk.Tk):
     Attributes:
         articles_command_panel (ArticlesCommandPanel): frame containing four buttons, three labels and three entries.
         files_command_panel (FilesCommandPanel): frame containing a Combobox, three buttons and four labels.
-        articles_registry_panel (ArticlesRegistryPanel): 
+        articles_registry_panel (ArticlesRegistryPanel): frame containing an entry and a button. 
     """
 
     def __init__(self):
@@ -57,7 +57,7 @@ class App(tk.Tk):
         self.articles_registry_panel.grid(row=1, column=1, sticky='nswe')
 
         # Load of the changes made since the last data save, using the pickle binary file.
-        saved_data = open('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\salvataggio_progressi\\dati_salvati.pkl', 'rb') 
+        saved_data = open('C:\\Users\\lara_\\OneDrive\\Desktop\\AppInventario\\AppInventario\\salvataggio_progressi\\dati_salvati.pkl', 'rb') 
         loading_data = pickle.load(saved_data)
         self.files_manager.files.update(loading_data)
         saved_data.close()
@@ -74,7 +74,7 @@ class App(tk.Tk):
         The FilesManager data structure is saved in a pickle binary file.
         """
 
-        saved_data = open('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\salvataggio_progressi\\dati_salvati.pkl', 'wb')
+        saved_data = open('C:\\Users\\lara_\\OneDrive\\Desktop\\AppInventario\\AppInventario\\salvataggio_progressi\\dati_salvati.pkl', 'wb')
         pickle.dump(self.files_manager.files, saved_data)
         saved_data.close()
         self.destroy() 

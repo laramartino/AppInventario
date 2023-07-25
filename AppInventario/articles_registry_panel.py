@@ -64,7 +64,7 @@ class ArticlesRegistryPanel (tk.Frame):
         if ret == True:
 
             # Read Excel file and get the 'ARTICOLO' column as a list of str.
-            articles_mp_list = pd.read_excel('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx')['ARTICOLO'].tolist() 
+            articles_mp_list = pd.read_excel('C:\\Users\\lara_\\OneDrive\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx')['ARTICOLO'].tolist() 
             articles_mp_list.append(article_to_add)
             articles_mp_list.sort()
 
@@ -75,7 +75,7 @@ class ArticlesRegistryPanel (tk.Frame):
             file_worksheet.append(header)
             for art in articles_mp_list:    
                 file_worksheet.append([art])
-            file_workbook.save('C:\\Users\\Lara\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx') 
+            file_workbook.save('C:\\Users\\lara_\\OneDrive\\Desktop\\AppInventario\\AppInventario\\anagrafica_articoli.xlsx') 
             
             messagebox.showinfo(title='Successo!', message='Articolo aggiunto correttamente.')
         
